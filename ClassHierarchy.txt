@@ -1,0 +1,19 @@
+$ICREATURE
+->Texture
+->Move(x, y)
+
+$Player : ICREATURE		/TODO/: Conflict
+/TODO/
+
+$ENEMY : ICREATURE
+->ViewZone
+->RadiusVector
+
+$ViewZone
+point
+radius_constant
+angle
+constructor ViewZone(params)
+{
+	*calculate radius-vector
+}

@@ -21,7 +21,7 @@ namespace Tonight
             {
                 win.DispatchEvents();
 
-                win.Clear(Color.Red);
+                win.Clear(Color.Black);
 
                 win.Display();
             }
