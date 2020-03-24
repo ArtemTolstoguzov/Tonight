@@ -10,12 +10,27 @@ namespace Tonight
 {
     class Window2D : RenderWindow
     {
-        private readonly Texture texture;
         private readonly Sprite background;
+        private readonly Texture bgTexture;
 
-        public Window2D(): base(new VideoMode(800, 600, 24), "Tonight")
+        public Window2D() : base(new VideoMode(800, 600, 24), "Tonight")
         {
-            
+            bgTexture = new Texture("images/bg1.png");
+            background = new Sprite(bgTexture);
+
+            base.SetFramerateLimit(80);
+            base.Closed += Window2DClosed;
+        }
+
+        private void Window2DClosed(object sender, EventArgs e)
+        {
+            base.Close();
+        }
+
+        public void DrawBG()
+        {
+            base.Clear(Color.Blue);
+            base.Draw(background);
         }
     }
 }
