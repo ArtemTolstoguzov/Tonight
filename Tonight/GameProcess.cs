@@ -10,49 +10,43 @@ namespace Tonight
     class GameProcess
     {
         private readonly Window2D window2D = new Window2D();
-        private readonly Hero Hero = new Hero();
 
-        public GameProcess()
-        {
-            window2D.KeyPressed += Window2DKeyPressed;
-        }
+        private const float TIME_BEFORE_UPDATE = 1f / 60;
 
-        private void Window2DKeyPressed(object sender, KeyEventArgs e)
-        {
-            if (e.Code == Keyboard.Key.W)
-            {
-                Hero.Position += new Vector2f(0, -10);
-                Hero.TextureRect = new IntRect(0, 288, 96, 96);
-            }
-            if (e.Code == Keyboard.Key.S)
-            {
-                Hero.Position += new Vector2f(0, 10);
-                Hero.TextureRect = new IntRect(0, 0, 96, 96);
-            }
-            if (e.Code == Keyboard.Key.A)
-            {
-                Hero.Position += new Vector2f(-10, 0);
-                Hero.TextureRect = new IntRect(0, 96, 96, 96);
-            }
-            if (e.Code == Keyboard.Key.D)
-            {
-                Hero.Position += new Vector2f(10, 0);
-                Hero.TextureRect = new IntRect(0, 192, 96, 96);
-            }
-        }
 
         public void Run()
         {
+            var hero = new Hero(window2D);
+            var enemy = new SecurityGuy(window2D, new Vector2f(300, 150));
+
+            var totalTimeBeforeUpdate = 0f;
+            var previousTimeElapsed = 0f;
+            var deltaTime = 0f;
+            var totalTimeElapsed = 0f;
+
+            var clock = new Clock();
 
             while (window2D.IsOpen == true)
             {
                 window2D.DispatchEvents();
 
-                window2D.DrawBG();
+                totalTimeElapsed = clock.ElapsedTime.AsSeconds();
+                deltaTime = totalTimeElapsed - previousTimeElapsed;
+                previousTimeElapsed = totalTimeElapsed;
 
-                window2D.Draw(Hero);
+                totalTimeBeforeUpdate += deltaTime;
 
-                window2D.Display();
+                if (totalTimeBeforeUpdate >= TIME_BEFORE_UPDATE)
+                {
+                    totalTimeBeforeUpdate = 0f;
+                    window2D.DrawBG();
+
+                    window2D.Draw(hero);
+                    if (!enemy.IsKilled(hero))
+                        window2D.Draw(enemy);
+
+                    window2D.Display();
+                }
             }
         }
     }

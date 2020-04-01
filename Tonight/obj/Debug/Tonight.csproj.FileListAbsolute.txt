@@ -1,10 +1,6 @@
 C:\GitProjects\Tonight\Tonight\bin\Debug\Tonight.exe.config
 C:\GitProjects\Tonight\Tonight\bin\Debug\Tonight.exe
 C:\GitProjects\Tonight\Tonight\bin\Debug\Tonight.pdb
-C:\GitProjects\Tonight\Tonight\bin\Debug\sfmlnet-audio-2.dll
-C:\GitProjects\Tonight\Tonight\bin\Debug\sfmlnet-graphics-2.dll
-C:\GitProjects\Tonight\Tonight\bin\Debug\sfmlnet-system-2.dll
-C:\GitProjects\Tonight\Tonight\bin\Debug\sfmlnet-window-2.dll
 C:\GitProjects\Tonight\Tonight\bin\Debug\sfmlnet-audio-2.pdb
 C:\GitProjects\Tonight\Tonight\bin\Debug\sfmlnet-audio-2.xml
 C:\GitProjects\Tonight\Tonight\bin\Debug\sfmlnet-graphics-2.pdb
