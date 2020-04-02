@@ -46,7 +46,7 @@ namespace Tonight
                     window2D.Draw(sector);              //It should be better
                     window2D.Draw(hero);                //
 
-                    if (!enemy.IsKilled(hero))
+                    if (!sector.Intersects(enemy.Position))
                         window2D.Draw(enemy);
 
                     window2D.Display();

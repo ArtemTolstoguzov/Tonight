@@ -31,5 +31,19 @@ namespace Tonight
                 SetPoint(i, new Vector2f(x, y));
             }
         }
+
+        public bool Intersects(Vector2f point)
+        {
+            var vec = GetPoint(sectorPointCount / 2);
+            point = point - Position;
+            var firstCond = point.X * point.X + point.Y * point.Y <= vec.X * vec.X + vec.Y * vec.Y;
+            var secondCond = (vec.X * point.X + vec.Y * point.Y) / (Math.Sqrt(vec.X * vec.X + vec.Y * vec.Y) * Math.Sqrt(point.X * point.X + point.Y * point.Y)) >= Math.Cos(Angle / 2);
+            Console.Write(firstCond);
+            Console.Write(" ");
+            Console.Write(secondCond);
+            Console.Write("\n");
+
+            return firstCond && secondCond;
+        }
     }
 }
