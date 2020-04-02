@@ -17,6 +17,7 @@ namespace Tonight
         public void Run()
         {
             var hero = new Hero(window2D);
+            var sector = new ViewZone(150, (float)Math.PI / 2);     //!
             var enemy = new SecurityGuy(window2D, new Vector2f(300, 150));
 
             var totalTimeBeforeUpdate = 0f;
@@ -41,7 +42,10 @@ namespace Tonight
                     totalTimeBeforeUpdate = 0f;
                     window2D.DrawBG();
 
-                    window2D.Draw(hero);
+                    sector.Position = hero.Position;    //
+                    window2D.Draw(sector);              //It should be better
+                    window2D.Draw(hero);                //
+
                     if (!enemy.IsKilled(hero))
                         window2D.Draw(enemy);
 
