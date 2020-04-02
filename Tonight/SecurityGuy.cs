@@ -11,7 +11,8 @@ namespace Tonight
     class SecurityGuy : Sprite
     {
         private Image SecurityGuyImage;
-        public bool isAlive = true;
+        private ViewZone viewZone;
+        private bool isAlive = true;
 
         public SecurityGuy(Window2D window2D, Vector2f position)
         {
@@ -19,17 +20,17 @@ namespace Tonight
             SecurityGuyImage.CreateMaskFromColor(Color.White);
             Texture = new Texture(SecurityGuyImage);
             TextureRect = new IntRect(0, 0, 30, 30);
-            Scale = new Vector2f(1f, 1f); // Масштаб размеров игрока относительно картинки
-            Origin = new Vector2f(GetLocalBounds().Width / 2, GetLocalBounds().Height / 2); // Центр героя, активная точка
+            Scale = new Vector2f(1f, 1f);
+            Origin = new Vector2f(GetLocalBounds().Width / 2, GetLocalBounds().Height / 2);
             Position = position;
         }
 
         public bool IsKilled(Hero hero)
         {
             var heroRect = hero.GetGlobalBounds();
-            var secguyRect = GetGlobalBounds();
+            var securityGuyRect = GetGlobalBounds();
 
-            if (heroRect.Intersects(secguyRect))
+            if (heroRect.Intersects(securityGuyRect))
                 isAlive = false;
 
             return !isAlive;

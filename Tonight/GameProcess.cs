@@ -18,6 +18,7 @@ namespace Tonight
         {
             var hero = new Hero(window2D);
             var sector = new ViewZone(150, (float)Math.PI / 2);     //!
+            sector.Rotate(-(float)Math.PI / 2);
             var enemy = new SecurityGuy(window2D, new Vector2f(300, 150));
 
             var totalTimeBeforeUpdate = 0f;
