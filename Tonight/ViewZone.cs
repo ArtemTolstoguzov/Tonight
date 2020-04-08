@@ -16,7 +16,7 @@ namespace Tonight
         private Vector2f direction;
         public ViewZone(float radius, float angle, uint pointCount = 30)
         {
-            
+
             Radius = radius;
             Angle = angle;
             sectorPointCount = pointCount;
@@ -50,10 +50,6 @@ namespace Tonight
             point = point - Position;
             var firstCond = point.X * point.X + point.Y * point.Y <= vec.X * vec.X + vec.Y * vec.Y;
             var secondCond = (vec.X * point.X + vec.Y * point.Y) / (Math.Sqrt(vec.X * vec.X + vec.Y * vec.Y) * Math.Sqrt(point.X * point.X + point.Y * point.Y)) >= Math.Cos(Angle / 2);
-            Console.Write(firstCond);
-            Console.Write(" ");
-            Console.Write(secondCond);
-            Console.Write("\n");
 
             return firstCond && secondCond;
         }

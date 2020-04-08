@@ -30,3 +30,4 @@ C:\Git\Tonight\Tonight\obj\Debug\Tonight.csproj.CoreCompileInputs.cache
 C:\Git\Tonight\Tonight\obj\Debug\Tonight.csproj.CopyComplete
 C:\Git\Tonight\Tonight\obj\Debug\Tonight.exe
 C:\Git\Tonight\Tonight\obj\Debug\Tonight.pdb
+C:\GitProjects\Tonight\Tonight\bin\Debug\TiledSharp.dll

@@ -4,6 +4,7 @@ using SFML.System;
 using SFML.Window;
 using SFML.Audio;
 using SFML.Graphics;
+using TiledSharp;
 
 namespace Tonight
 {
@@ -16,7 +17,10 @@ namespace Tonight
 
         public void Run()
         {
-            var hero = new Hero(window2D);
+            var view = new View(new FloatRect(0, 0, 800, 600));
+            var map = new Map("maps/RectMapOnlyWithWallsAndGround.tmx", view);
+            var hero = new Hero(window2D, map);
+
             var sector = new ViewZone(150, (float)Math.PI / 2);     //!
             sector.Rotate(-(float)Math.PI / 2);
             var enemy = new SecurityGuy(window2D, new Vector2f(300, 150));
@@ -31,6 +35,7 @@ namespace Tonight
             while (window2D.IsOpen == true)
             {
                 window2D.DispatchEvents();
+                view.Center = hero.Position;
 
                 totalTimeElapsed = clock.ElapsedTime.AsSeconds();
                 deltaTime = totalTimeElapsed - previousTimeElapsed;
@@ -38,10 +43,15 @@ namespace Tonight
 
                 totalTimeBeforeUpdate += deltaTime;
 
+
                 if (totalTimeBeforeUpdate >= TIME_BEFORE_UPDATE)
                 {
                     totalTimeBeforeUpdate = 0f;
+                    window2D.SetView(view);
+                    window2D.Clear();
                     window2D.DrawBG();
+                    window2D.Draw(map);
+
 
                     sector.Position = hero.Position;    //
                     window2D.Draw(sector);              //It should be better
