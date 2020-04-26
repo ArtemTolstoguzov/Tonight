@@ -14,6 +14,7 @@ namespace Tonight
     {
         public Image HeroImage;
         public Map map;
+        public Sight sight;
         private Vector2f? deltaMoveVector;
         private const float delta = 500;
         private Vector2f deltaToUp = new Vector2f(0, -delta);
@@ -24,6 +25,7 @@ namespace Tonight
         public Hero(Window2D window2D, Map map)
         {
             this.map = map;
+            sight = new Sight(window2D,20, (float)Math.PI / 6);
             HeroImage = new Image("images/hero1.png");
             Texture = new Texture(HeroImage);
             TextureRect = new IntRect(6, 232, 84, 53);
@@ -60,7 +62,9 @@ namespace Tonight
             {
                 var moveVector = gameTime.DeltaTime * deltaMoveVector.Value;
                 if (!CheckCollisions(moveVector))
+                {
                     Position += moveVector;
+                }
             }
         }
         private void OnKeyPressed(object sender, KeyEventArgs e)

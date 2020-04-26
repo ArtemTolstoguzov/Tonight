@@ -72,6 +72,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SecurityGuy.cs" />
+    <Compile Include="Sight.cs" />
     <Compile Include="ViewZone.cs" />
     <Compile Include="Window2D.cs" />
   </ItemGroup>

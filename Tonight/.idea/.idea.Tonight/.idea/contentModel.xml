@@ -17,6 +17,7 @@
         <e p="AssemblyInfo.cs" t="Include" />
       </e>
       <e p="SecurityGuy.cs" t="Include" />
+      <e p="Sight.cs" t="Include" />
       <e p="Tonight.csproj" t="IncludeRecursive" />
       <e p="Tonight.sln" t="IncludeFlat" />
       <e p="ViewZone.cs" t="Include" />

@@ -8,7 +8,7 @@ using SFML.Window;
 
 namespace Tonight
 {
-    class Window2D : RenderWindow
+    public class Window2D : RenderWindow
     {
         private readonly Sprite background;
         private readonly Texture bgTexture;

@@ -26,6 +26,7 @@ namespace Tonight
             var view = new View(new FloatRect(0, 0, 800, 600));
             var map = new Map("maps/RectMapOnlyWithWallsAndGround.tmx", view);
             var hero = new Hero(window2D, map);
+            window2D.SetMouseCursorVisible(false);
 
             var sector = new ViewZone(150, (float)Math.PI / 2);     //!
             sector.Rotate(-(float)Math.PI / 2);
@@ -48,8 +49,7 @@ namespace Tonight
                 previousTimeElapsed = totalTimeElapsed;
 
                 totalTimeBeforeUpdate += deltaTime;
-
-
+                
                 if (totalTimeBeforeUpdate >= TIME_BEFORE_UPDATE)
                 {
                     gameTime.Update(totalTimeBeforeUpdate, totalTimeElapsed);
@@ -65,7 +65,8 @@ namespace Tonight
                     sector.Position = hero.Position;    //
                     window2D.Draw(sector);              //It should be better
                     window2D.Draw(hero);                //
-
+                    window2D.Draw(hero.sight);          //
+                    
                     if (!sector.Intersects(enemy.Position))
                         window2D.Draw(enemy);
 
