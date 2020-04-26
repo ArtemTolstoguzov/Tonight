@@ -10,7 +10,6 @@ C:\GitProjects\Tonight\Tonight\bin\Debug\sfmlnet-system-2.xml
 C:\GitProjects\Tonight\Tonight\bin\Debug\sfmlnet-window-2.pdb
 C:\GitProjects\Tonight\Tonight\bin\Debug\sfmlnet-window-2.xml
 C:\GitProjects\Tonight\Tonight\obj\Debug\Tonight.csprojAssemblyReference.cache
-C:\GitProjects\Tonight\Tonight\obj\Debug\Tonight.csproj.CoreCompileInputs.cache
 C:\GitProjects\Tonight\Tonight\obj\Debug\Tonight.csproj.CopyComplete
 C:\GitProjects\Tonight\Tonight\obj\Debug\Tonight.exe
 C:\GitProjects\Tonight\Tonight\obj\Debug\Tonight.pdb

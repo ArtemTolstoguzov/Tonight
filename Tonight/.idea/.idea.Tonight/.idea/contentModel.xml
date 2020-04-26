@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\GitProjects\Tonight\Tonight" t="IncludeRecursive">
+      <e p="App.config" t="Include" />
+      <e p="bin" t="ExcludeRecursive" />
+      <e p="GameProcess.cs" t="Include" />
+      <e p="GameTime.cs" t="Include" />
+      <e p="Hero.cs" t="Include" />
+      <e p="Map.cs" t="Include" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Object.cs" t="Include" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="packages.config" t="Include" />
+      <e p="Program.cs" t="Include" />
+      <e p="Properties" t="Include">
+        <e p="AssemblyInfo.cs" t="Include" />
+      </e>
+      <e p="SecurityGuy.cs" t="Include" />
+      <e p="Tonight.csproj" t="IncludeRecursive" />
+      <e p="Tonight.sln" t="IncludeFlat" />
+      <e p="ViewZone.cs" t="Include" />
+      <e p="Window2D.cs" t="Include" />
+    </e>
+    <e p="C:\Users\savin\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\savin\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_Tonight.-1380096092.00" t="ExcludeRecursive" />
+  </component>
+</project>

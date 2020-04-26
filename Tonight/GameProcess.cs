@@ -8,13 +8,19 @@ using TiledSharp;
 
 namespace Tonight
 {
-    class GameProcess
+    public class GameProcess
     {
         private readonly Window2D window2D = new Window2D();
-
+        private GameTime gameTime = new GameTime();
         private const float TIME_BEFORE_UPDATE = 1f / 60;
 
 
+        private void ShowTime(GameTime gameTime)
+        {
+            var fps = (1f / gameTime.DeltaTime);
+            var str = gameTime.TotalTimeElapsed + " " + gameTime.DeltaTime + " " + fps;
+                      Console.WriteLine(str);
+        }
         public void Run()
         {
             var view = new View(new FloatRect(0, 0, 800, 600));
@@ -46,6 +52,9 @@ namespace Tonight
 
                 if (totalTimeBeforeUpdate >= TIME_BEFORE_UPDATE)
                 {
+                    gameTime.Update(totalTimeBeforeUpdate, totalTimeElapsed);
+                    hero.Update(gameTime);
+                    //ShowTime(gameTime);
                     totalTimeBeforeUpdate = 0f;
                     window2D.SetView(view);
                     window2D.Clear();
