@@ -9,11 +9,13 @@ using SFML.Graphics;
 
 namespace Tonight
 {
-    class Map : Drawable
+    public class Map : Drawable
     {
         public readonly TmxMap tmxMap;
-        public readonly int Width;
-        public readonly int Height;
+        public readonly float Width;
+        public readonly float Height;
+        public readonly int WidthInTiles;
+        public readonly int HeightInTiles;
         public readonly int TileSize;
         private readonly TmxList<TmxLayer> layers;
         private readonly Dictionary<int, Tuple<IntRect, Texture>> matchingGidTexture;
@@ -25,12 +27,14 @@ namespace Tonight
         {
             this.view = view;
             tmxMap = new TmxMap(pathName);
-            Width = tmxMap.Width;
-            Height = tmxMap.Height;
+            WidthInTiles = tmxMap.Width;
+            HeightInTiles = tmxMap.Height;
             TileSize = tmxMap.TileWidth;
             layers = tmxMap.Layers;
             matchingGidTexture = ConvertGidDict(tmxMap.Tilesets);
             mapObjects = ConvertObjects(tmxMap.ObjectGroups);
+            Width = WidthInTiles * TileSize;
+            Height = HeightInTiles * TileSize;
         }
 
         public void Draw(RenderTarget target, RenderStates states)
@@ -45,8 +49,8 @@ namespace Tonight
         {
             var tilesetSprite = new Sprite();
 
-            for (int i = 0; i < Height; i++)
-                for (int j = 0; j < Width; j++)
+            for (int i = 0; i < HeightInTiles; i++)
+                for (int j = 0; j < WidthInTiles; j++)
                 {
                     var numberOfTile = layer.Tiles[i * TileSize + j].Gid;
                     var tuple = matchingGidTexture[numberOfTile];

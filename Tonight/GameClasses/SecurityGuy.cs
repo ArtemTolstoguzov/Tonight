@@ -8,7 +8,7 @@ using SFML.Graphics;
 
 namespace Tonight
 {
-    class SecurityGuy : Sprite
+    public class SecurityGuy : Sprite, IUpdatable
     {
         private Image SecurityGuyImage;
         private ViewZone viewZone;
@@ -36,5 +36,9 @@ namespace Tonight
             return !isAlive;
         }
 
+        public void Update(GameTime gameTime)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -10,12 +10,14 @@ namespace Tonight
     {
         private ConvexShape triangle;
         private Vector2f position;
+        private Window2D window;
         public Vector2f Position
         {
             get => triangle.Position;
             set => triangle.Position = value;
         }
-        public Sight(Window2D window2D, float radius, float angle)
+
+        public Sight(Window2D window2D, float radius = 20, float angle = (float) Math.PI / 6)
         {
             angle /= 2;
             triangle = new ConvexShape(3);
@@ -25,11 +27,12 @@ namespace Tonight
             triangle.Origin = triangle.GetPoint(1) + new Vector2f(3, 0);
             triangle.Position = (Vector2f)Mouse.GetPosition();
             window2D.MouseMoved += Move;
+            window = window2D;
         }
 
         private void Move(object sender, MouseMoveEventArgs e)
         {
-            triangle.Position = new Vector2f(e.X, e.Y);
+            triangle.Position = (Vector2f) Mouse.GetPosition(window);
         }
 
         public void Draw(RenderTarget target, RenderStates states)

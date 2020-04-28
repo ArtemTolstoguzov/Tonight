@@ -8,7 +8,7 @@ using SFML.System;
 
 namespace Tonight
 {
-    class ViewZone : ConvexShape
+    public class ViewZone : ConvexShape
     {
         public float Radius;
         public float Angle;
