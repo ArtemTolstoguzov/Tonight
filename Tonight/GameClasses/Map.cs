@@ -17,6 +17,7 @@ namespace Tonight
         public readonly int WidthInTiles;
         public readonly int HeightInTiles;
         public readonly int TileSize;
+        public List<SecurityGuy> enemies;
         private readonly TmxList<TmxLayer> layers;
         private readonly Dictionary<int, Tuple<IntRect, Texture>> matchingGidTexture;
         public readonly Dictionary<string, List<Object>> mapObjects;
@@ -25,6 +26,7 @@ namespace Tonight
 
         public Map(string pathName, View view)
         {
+            enemies = new List<SecurityGuy>();
             this.view = view;
             tmxMap = new TmxMap(pathName);
             WidthInTiles = tmxMap.Width;

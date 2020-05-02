@@ -20,6 +20,7 @@ namespace Tonight
 
             base.SetFramerateLimit(80);
             base.Closed += Window2DClosed;
+            
         }
 
         private void Window2DClosed(object sender, EventArgs e)

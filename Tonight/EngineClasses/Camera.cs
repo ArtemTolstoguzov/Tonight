@@ -11,9 +11,10 @@ namespace Tonight
         {
         }
         
-        public void Move(Vector2f center, Map map)
+        public void Move(Hero hero, Map map)
         {
-            var moveVector = center;
+            var moveVector = hero.Position;
+            var center = moveVector;
             if (2 * center.X <= Size.X)
                 moveVector.X = Size.X / 2;
             if (2 * center.X >= 2 * map.Width - Size.X)

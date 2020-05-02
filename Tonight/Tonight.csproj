@@ -66,10 +66,12 @@
   <ItemGroup>
     <Compile Include="EngineClasses\Camera.cs" />
     <Compile Include="EngineClasses\GameProcess.cs" />
+    <Compile Include="EngineClasses\GameProcessAbstract.cs" />
     <Compile Include="EngineClasses\GameTime.cs" />
     <Compile Include="EngineClasses\Object.cs" />
     <Compile Include="EngineClasses\Program.cs" />
     <Compile Include="EngineClasses\Window2D.cs" />
+    <Compile Include="GameClasses\Bullet.cs" />
     <Compile Include="GameClasses\Directions.cs" />
     <Compile Include="GameClasses\Hero.cs" />
     <Compile Include="GameClasses\Map.cs" />

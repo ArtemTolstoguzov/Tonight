@@ -19,48 +19,85 @@ namespace Tonight
         public Sight sight;
         private float speed = 500;
         private Window2D window;
+        public List<Bullet> Bullets { get; set; }
         public Hero(Window2D window2D, Map map)
         {
             this.map = map;
-            sight = new Sight(window2D);
             HeroImage = new Image("images/hero.png");
             Texture = new Texture(HeroImage);
             TextureRect = new IntRect(6, 232, 84, 53);
             Scale = new Vector2f(1f, 1f);
             Origin = new Vector2f(GetLocalBounds().Width / 2, GetLocalBounds().Height / 2);
             Position = new Vector2f(250, 150);
+            sight = new Sight(window2D);
+            Bullets = new List<Bullet>();
             window = window2D;
+            window.KeyPressed += Shoot;
         }
 
+        private void Shoot(object sender, KeyEventArgs e)
+        {
+            if (e.Code==Key.Space)
+                Bullets.Add(new Bullet(Position, sight.Position,  map));
+        }
+
+        public static float GetVectorLength(Vector2f vector)
+        {
+            return (float) Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
+        }
         public void Update(GameTime gameTime)
         {
+            sight.Move();
+            var cameraCenter = window.GetView().Center;
+            sight.Move(cameraCenter - window.GetView().Size / 2);
             Move(gameTime);
+            //sight
             RotateToCursor();
+
+            Bullets = Bullets
+                .Where(b =>
+            {
+                b.Update(gameTime);
+                return b.IsAlive;
+            })
+                .ToList();
         }
 
+        
         public void RotateToCursor()
         {
-            var mousePoint = (Vector2f) Mouse.GetPosition(window);
-            var sightLine = mousePoint-Position;
+            var mouseVec = (Vector2f) Mouse.GetPosition(window);
+            var sightLine = sight.Position - Position;
             var rotation = ((float) Math.Atan2(sightLine.Y, sightLine.X)) * 180 / (float) Math.PI;
             Rotation = rotation;
         }
+
         public bool CheckCollisions(Vector2f delta)
         {
             var objects = map.mapObjects["collision"];
-            var heroRect = GetGlobalBounds();
-            heroRect.Left += delta.X;
-            heroRect.Top += delta.Y;
+
+            var collisionRect = GetSpriteRectangleWithoutRotation();
+            collisionRect.Left += delta.X;
+            collisionRect.Top += delta.Y;
             foreach (var obj in objects)
             {
-                if (obj.Rect.Intersects(heroRect))
+                if (obj.Rect.Intersects(collisionRect))
                     return true;
             }
 
             return false;
         }
-        
-        private void Move(GameTime gameTime)
+
+        private FloatRect GetSpriteRectangleWithoutRotation()
+        {
+            var tempRotation = Rotation;
+            Rotation = 0;
+            var rect = GetGlobalBounds();
+            Rotation = tempRotation;
+            return rect;
+        }
+
+    private void Move(GameTime gameTime)
         {
             if (IsKeyPressed(Key.W))
             {

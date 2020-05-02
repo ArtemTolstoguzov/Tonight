@@ -10,16 +10,17 @@ namespace Tonight
 {
     public class SecurityGuy : Sprite, IUpdatable
     {
+        public List<Bullet> Bullets { get; set; }
         private Image SecurityGuyImage;
         private ViewZone viewZone;
         private bool isAlive = true;
 
         public SecurityGuy(Window2D window2D, Vector2f position)
         {
-            SecurityGuyImage = new Image("images/enemy.png");
+            SecurityGuyImage = new Image("images/hero.png");
             SecurityGuyImage.CreateMaskFromColor(Color.White);
             Texture = new Texture(SecurityGuyImage);
-            TextureRect = new IntRect(0, 0, 30, 30);
+            TextureRect = new IntRect(6, 232, 84, 53);;
             Scale = new Vector2f(1f, 1f);
             Origin = new Vector2f(GetLocalBounds().Width / 2, GetLocalBounds().Height / 2);
             Position = position;

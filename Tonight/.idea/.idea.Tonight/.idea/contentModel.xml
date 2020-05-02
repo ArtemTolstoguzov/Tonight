@@ -7,12 +7,14 @@
       <e p="EngineClasses" t="Include">
         <e p="Camera.cs" t="Include" />
         <e p="GameProcess.cs" t="Include" />
+        <e p="GameProcessAbstract.cs" t="Include" />
         <e p="GameTime.cs" t="Include" />
         <e p="Object.cs" t="Include" />
         <e p="Program.cs" t="Include" />
         <e p="Window2D.cs" t="Include" />
       </e>
       <e p="GameClasses" t="Include">
+        <e p="Bullet.cs" t="Include" />
         <e p="Directions.cs" t="Include" />
         <e p="Hero.cs" t="Include" />
         <e p="Map.cs" t="Include" />

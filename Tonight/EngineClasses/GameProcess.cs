@@ -13,22 +13,21 @@ namespace Tonight
     {
         private readonly Window2D window2D = new Window2D();
         private GameTime gameTime = new GameTime();
-        private const float TIME_BEFORE_UPDATE = 1f / 60;
+        private const float TIME_BEFORE_UPDATE = 1f / 40;
         private void ShowTime(GameTime gameTime)
         {
             var fps = (1f / gameTime.DeltaTime);
             var str = gameTime.TotalTimeElapsed + " " + gameTime.DeltaTime + " " + fps;
                       Console.WriteLine(str);
         }
+        
         public void Run()
         {
             var camera = new Camera(800, 600);
             var map = new Map("maps/RectMapOnlyWithWallsAndGround.tmx", camera);
             var hero = new Hero(window2D, map);
-            window2D.SetMouseCursorVisible(false);
-
-            var sector = new ViewZone(150, (float)Math.PI / 2);     //!
-            sector.Rotate(-(float)Math.PI / 2);
+            window2D.SetMouseCursorVisible(true);
+            
             var enemy = new SecurityGuy(window2D, new Vector2f(300, 150));
 
             var totalTimeBeforeUpdate = 0f;
@@ -49,8 +48,9 @@ namespace Tonight
                 if (totalTimeBeforeUpdate >= TIME_BEFORE_UPDATE)
                 {
                     gameTime.Update(totalTimeBeforeUpdate, totalTimeElapsed);
+                    camera.Move(hero, map);
                     hero.Update(gameTime);
-                    camera.Move(hero.Position, map);
+                    
                     //ShowTime(gameTime);
                     totalTimeBeforeUpdate = 0f;
                     window2D.SetView(camera);
@@ -58,13 +58,18 @@ namespace Tonight
                     window2D.DrawBG();
                     window2D.Draw(map);
 
-                    sector.Position = hero.Position;    //
-                    window2D.Draw(sector);              //It should be better
+                                                        ////It should be better
                     window2D.Draw(hero);                //
                     window2D.Draw(hero.sight);          //
+
+                    foreach (var bullet in hero.Bullets)
+                    {
+                        window2D.Draw(bullet);
+                    }
                     
-                    if (!sector.Intersects(enemy.Position))
-                        window2D.Draw(enemy);
+                    
+                    
+                    window2D.Draw(enemy);
 
                     window2D.Display();
                     

@@ -25,14 +25,18 @@ namespace Tonight
             triangle.SetPoint(1, new Vector2f(radius * (float) Math.Cos(angle), radius * (float) Math.Sin(angle)));
             triangle.SetPoint(2, new Vector2f(0, 2 * radius * (float)Math.Sin(angle)));
             triangle.Origin = triangle.GetPoint(1) + new Vector2f(3, 0);
-            triangle.Position = (Vector2f)Mouse.GetPosition();
-            window2D.MouseMoved += Move;
+            //triangle.Position = new Vector2f(250, 150);
             window = window2D;
         }
 
-        private void Move(object sender, MouseMoveEventArgs e)
+        public void Move(Vector2f vector)
         {
-            triangle.Position = (Vector2f) Mouse.GetPosition(window);
+            Position += vector;
+        }
+
+        public void Move()
+        {
+            Position = (Vector2f) Mouse.GetPosition(window);
         }
 
         public void Draw(RenderTarget target, RenderStates states)
