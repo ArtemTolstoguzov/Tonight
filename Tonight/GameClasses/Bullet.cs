@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using SFML.Graphics;
 using SFML.System;
 
@@ -8,13 +9,12 @@ namespace Tonight
     {
         public bool IsAlive { get; private set; }
         private Vector2f direction;
-        private float speed = 1000;
-        private Image bulletImage;
+        private float speed = 700;
+        private static Image bulletImage = new Image("images/bullet.png");
         private Map map;
         public Bullet(Vector2f heroPosition, Vector2f sightPosition, Map map)
         {
             this.map = map;
-            bulletImage = new Image("images/bullet.png");
             bulletImage.CreateMaskFromColor(Color.Black);
             Texture = new Texture(bulletImage);
             TextureRect = new IntRect(0, 0, 16, 16);
@@ -42,7 +42,6 @@ namespace Tonight
         public bool CheckCollisions(Vector2f delta)
         {
             var objects = map.mapObjects["collision"];
-            //var enemies = map.mapObjects["enemies"];
             
             var collisionRect = GetGlobalBounds();
             collisionRect.Left += delta.X;
@@ -54,7 +53,15 @@ namespace Tonight
                     return true;
                 }
             }
-
+            foreach (var enemy in map.Enemies)
+            {
+                if (enemy.GetGlobalBounds().Intersects(collisionRect))
+                {
+                    enemy.IsAlive = false;
+                    map.Enemies = map.Enemies.Where(e => e.IsAlive).ToList();
+                    return true;
+                }
+            }
             return false;
         }
         

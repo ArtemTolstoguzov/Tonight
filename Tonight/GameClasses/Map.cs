@@ -9,7 +9,7 @@ using SFML.Graphics;
 
 namespace Tonight
 {
-    public class Map : Drawable
+    public class Map : Drawable, IUpdatable
     {
         public readonly TmxMap tmxMap;
         public readonly float Width;
@@ -17,7 +17,8 @@ namespace Tonight
         public readonly int WidthInTiles;
         public readonly int HeightInTiles;
         public readonly int TileSize;
-        public List<SecurityGuy> enemies;
+        public List<SecurityGuy> Enemies;
+        public List<Bullet> Bullets;
         private readonly TmxList<TmxLayer> layers;
         private readonly Dictionary<int, Tuple<IntRect, Texture>> matchingGidTexture;
         public readonly Dictionary<string, List<Object>> mapObjects;
@@ -26,7 +27,6 @@ namespace Tonight
 
         public Map(string pathName, View view)
         {
-            enemies = new List<SecurityGuy>();
             this.view = view;
             tmxMap = new TmxMap(pathName);
             WidthInTiles = tmxMap.Width;
@@ -37,6 +37,11 @@ namespace Tonight
             mapObjects = ConvertObjects(tmxMap.ObjectGroups);
             Width = WidthInTiles * TileSize;
             Height = HeightInTiles * TileSize;
+            Enemies = mapObjects["enemies"]
+                .Select(o => new SecurityGuy(o.Position))
+                .ToList();
+            mapObjects["enemies"] = null;
+            Bullets = new List<Bullet>();
         }
 
         public void Draw(RenderTarget target, RenderStates states)
@@ -114,6 +119,17 @@ namespace Tonight
             }
 
             return dict;
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            Bullets = Bullets
+                   .Where(b =>
+                   {
+                       b.Update(gameTime);
+                       return b.IsAlive;
+                   })
+                   .ToList();
         }
     }
 }

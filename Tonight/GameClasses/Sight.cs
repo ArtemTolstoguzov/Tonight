@@ -6,7 +6,7 @@ using SFML.Window;
 
 namespace Tonight
 {
-    public class Sight : Drawable
+    public class Sight : Drawable, IUpdatable
     {
         private ConvexShape triangle;
         private Vector2f position;
@@ -31,12 +31,8 @@ namespace Tonight
 
         public void Move(Vector2f vector)
         {
-            Position += vector;
-        }
-
-        public void Move()
-        {
             Position = (Vector2f) Mouse.GetPosition(window);
+            Position += vector;
         }
 
         public void Draw(RenderTarget target, RenderStates states)
@@ -46,6 +42,12 @@ namespace Tonight
                 target.Draw(triangle);
                 triangle.Rotation += 90;
             }
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            var cameraCenter = window.GetView().Center;
+            Move(cameraCenter - window.GetView().Size / 2);
         }
     }
 }

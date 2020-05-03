@@ -13,7 +13,7 @@ namespace Tonight
     {
         private readonly Window2D window2D = new Window2D();
         private GameTime gameTime = new GameTime();
-        private const float TIME_BEFORE_UPDATE = 1f / 40;
+        private const float TIME_BEFORE_UPDATE = 1f / 60;
         private void ShowTime(GameTime gameTime)
         {
             var fps = (1f / gameTime.DeltaTime);
@@ -27,8 +27,7 @@ namespace Tonight
             var map = new Map("maps/RectMapOnlyWithWallsAndGround.tmx", camera);
             var hero = new Hero(window2D, map);
             window2D.SetMouseCursorVisible(true);
-            
-            var enemy = new SecurityGuy(window2D, new Vector2f(300, 150));
+
 
             var totalTimeBeforeUpdate = 0f;
             var previousTimeElapsed = 0f;
@@ -50,8 +49,10 @@ namespace Tonight
                     gameTime.Update(totalTimeBeforeUpdate, totalTimeElapsed);
                     camera.Move(hero, map);
                     hero.Update(gameTime);
-                    
+                    map.Update(gameTime);
+
                     //ShowTime(gameTime);
+                    Console.WriteLine(map.Bullets.Count);
                     totalTimeBeforeUpdate = 0f;
                     window2D.SetView(camera);
                     window2D.Clear();
@@ -62,14 +63,14 @@ namespace Tonight
                     window2D.Draw(hero);                //
                     window2D.Draw(hero.sight);          //
 
-                    foreach (var bullet in hero.Bullets)
+                    foreach (var bullet in map.Bullets)
                     {
                         window2D.Draw(bullet);
                     }
-                    
-                    
-                    
-                    window2D.Draw(enemy);
+                    foreach (var enemy in map.Enemies)
+                    {
+                        window2D.Draw(enemy);
+                    }
 
                     window2D.Display();
                     

@@ -19,7 +19,6 @@ namespace Tonight
         public Sight sight;
         private float speed = 500;
         private Window2D window;
-        public List<Bullet> Bullets { get; set; }
         public Hero(Window2D window2D, Map map)
         {
             this.map = map;
@@ -30,15 +29,13 @@ namespace Tonight
             Origin = new Vector2f(GetLocalBounds().Width / 2, GetLocalBounds().Height / 2);
             Position = new Vector2f(250, 150);
             sight = new Sight(window2D);
-            Bullets = new List<Bullet>();
             window = window2D;
-            window.KeyPressed += Shoot;
         }
 
-        private void Shoot(object sender, KeyEventArgs e)
+        private void Shoot()
         {
-            if (e.Code==Key.Space)
-                Bullets.Add(new Bullet(Position, sight.Position,  map));
+            if (Mouse.IsButtonPressed(Mouse.Button.Left))
+                map.Bullets.Add(new Bullet(Position, sight.Position,  map));
         }
 
         public static float GetVectorLength(Vector2f vector)
@@ -47,20 +44,10 @@ namespace Tonight
         }
         public void Update(GameTime gameTime)
         {
-            sight.Move();
-            var cameraCenter = window.GetView().Center;
-            sight.Move(cameraCenter - window.GetView().Size / 2);
+            sight.Update(gameTime);
             Move(gameTime);
-            //sight
             RotateToCursor();
-
-            Bullets = Bullets
-                .Where(b =>
-            {
-                b.Update(gameTime);
-                return b.IsAlive;
-            })
-                .ToList();
+            Shoot();
         }
 
         
