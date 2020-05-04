@@ -17,10 +17,10 @@ namespace Tonight
 
         public SecurityGuy(Vector2f position)
         {
-            SecurityGuyImage = new Image("images/hero1.png");
+            SecurityGuyImage = new Image("Sprites/SecurityGuy/security_gun.png");
             SecurityGuyImage.CreateMaskFromColor(Color.White);
             Texture = new Texture(SecurityGuyImage);
-            TextureRect = new IntRect(6, 232, 84, 53);;
+            TextureRect = new IntRect(0, 0, 51, 43);;
             Scale = new Vector2f(1f, 1f);
             Origin = new Vector2f(GetLocalBounds().Width / 2, GetLocalBounds().Height / 2);
             Position = position;

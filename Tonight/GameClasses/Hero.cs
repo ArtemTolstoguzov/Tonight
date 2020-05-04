@@ -22,9 +22,9 @@ namespace Tonight
         public Hero(Window2D window2D, Map map)
         {
             this.map = map;
-            HeroImage = new Image("images/hero.png");
+            HeroImage = new Image("Sprites/Player/player_gun.png");
             Texture = new Texture(HeroImage);
-            TextureRect = new IntRect(6, 232, 84, 53);
+            TextureRect = new IntRect(0, 0, 49, 43);
             Scale = new Vector2f(1f, 1f);
             Origin = new Vector2f(GetLocalBounds().Width / 2, GetLocalBounds().Height / 2);
             Position = new Vector2f(250, 150);

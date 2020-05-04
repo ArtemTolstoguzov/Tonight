@@ -24,7 +24,7 @@ namespace Tonight
         public void Run()
         {
             var camera = new Camera(800, 600);
-            var map = new Map("maps/RectMapOnlyWithWallsAndGround.tmx", camera);
+            var map = new Map("maps/NiceTestMap.tmx", camera);
             var hero = new Hero(window2D, map);
             window2D.SetMouseCursorVisible(true);
 
@@ -52,7 +52,7 @@ namespace Tonight
                     map.Update(gameTime);
 
                     //ShowTime(gameTime);
-                    Console.WriteLine(map.Bullets.Count);
+                    //Console.WriteLine(map.Bullets.Count);
                     totalTimeBeforeUpdate = 0f;
                     window2D.SetView(camera);
                     window2D.Clear();

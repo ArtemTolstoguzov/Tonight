@@ -59,7 +59,9 @@ namespace Tonight
             for (int i = 0; i < HeightInTiles; i++)
                 for (int j = 0; j < WidthInTiles; j++)
                 {
-                    var numberOfTile = layer.Tiles[i * TileSize + j].Gid;
+                    var numberOfTile = layer.Tiles[i * WidthInTiles + j].Gid;
+                    if (numberOfTile == 0)
+                        continue;
                     var tuple = matchingGidTexture[numberOfTile];
 
                     tilesetSprite.Texture = tuple.Item2;
