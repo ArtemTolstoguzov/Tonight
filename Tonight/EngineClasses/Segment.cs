@@ -17,6 +17,11 @@ namespace Tonight
             rect.Rotation = angleGrad;
         }
 
+        public FloatRect GetGlobalBounds()
+        {
+            return rect.GetGlobalBounds();
+        }
+
         public void Draw(RenderTarget target, RenderStates states)
         {
             target.Draw(rect);

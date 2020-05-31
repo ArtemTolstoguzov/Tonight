@@ -24,7 +24,8 @@ namespace Tonight
         private readonly List<TmxLayer> layers;
         public readonly TmxLayer collisionTiles;
         private readonly Dictionary<int, Tuple<IntRect, Texture>> matchingGidTexture;
-        public readonly Dictionary<string, List<Object>> mapObjects;
+        private readonly Dictionary<string, List<Object>> mapObjects;
+        public readonly List<Object> CollisionObjects;
         private View view;
 
         public Map(string pathName, View view)
@@ -40,16 +41,14 @@ namespace Tonight
             mapObjects = ConvertObjects(tmxMap.ObjectGroups);
             Width = WidthInTiles * TileSize;
             Height = HeightInTiles * TileSize;
+            CollisionObjects = mapObjects["collision"];
             Bullets = new List<Bullet>();
         }
 
         public Vector2f GetStartPlayerCoordinates() => mapObjects["player"][0].Position;
 
         public List<Object> GetEnemies() => mapObjects["enemies"];
-        public bool IsSegmentIntersectsWithSolidObjects(Vector2f startSegment, Vector2f endSegment)
-        {
-            return true;
-        }
+        
         public int GetTileGidInLayer(Vector2i mapPoint, TmxLayer layer)
         {
             return layer.Tiles[mapPoint.X + mapPoint.Y * WidthInTiles].Gid;
@@ -78,7 +77,7 @@ namespace Tonight
                 {
                     for (var dx = -1; dx <= 1; dx++)
                     {
-                        if (dx == 0 && dy == 0)
+                        if (dx != 0 && dy != 0)
                             continue;
                         
                         var neighbour = new Vector2i(currentPoint.X + dx, currentPoint.Y + dy);

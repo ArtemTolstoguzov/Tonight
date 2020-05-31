@@ -12,9 +12,8 @@ namespace Tonight
     {
         Patrol,
         MovingToPoint,
-        Shoot
     }
-    public class SecurityGuy : Sprite, IUpdatable, IEntity
+    public class SecurityGuy : Sprite, IUpdatable, IEntity, IShootable
     {
         public List<Bullet> Bullets { get; set; }
 
@@ -22,13 +21,14 @@ namespace Tonight
         public Segment SegmentToPlayer;
         private EnemyState state;
         private Image SecurityGuyImage;
-        private ViewZone viewZone;
+        public ViewZone viewZone;
         private Level level;
         private static Random random = new Random();
         private Vector2i? tileDestination;
         private Vector2f pointDestination;
+        private IEnumerator<Vector2i> shortestPathToPoint;
         private Vector2i patrolDirection;
-        private const float speed = 100;
+        private float speed = 100;
         private Hero hero;
 
         public SecurityGuy(Vector2f position, Level level)
@@ -41,11 +41,28 @@ namespace Tonight
             Scale = new Vector2f(1f, 1f);
             Origin = new Vector2f(GetLocalBounds().Width / 2, GetLocalBounds().Height / 2);
             Position = position;
+            viewZone = new ViewZone(600, (float) (Math.PI / 1.4));
             IsAlive = true;
             state = EnemyState.Patrol;
         }
 
-        public bool CheckCollisions(Vector2f delta)
+        public bool IsPlayerSeen()
+        {
+            return viewZone.Intersects(level.GetPlayerCoordinates()) && IsPlayerInLineOfSight();
+        }
+
+        private bool IsPlayerInLineOfSight()
+        {
+            var segmentRect = SegmentToPlayer.GetGlobalBounds();
+            foreach (var obj in level.Map.CollisionObjects)
+            {
+                if (obj.Rect.Intersects(segmentRect))
+                    return false;
+            }
+
+            return true;
+        }
+        private bool CheckCollisions(Vector2f delta)
         {
             var countColiisions = 0;
             var entities = level.GetEntities();
@@ -69,20 +86,6 @@ namespace Tonight
             var rect = GetGlobalBounds();
             Rotation = tempRotation;
             return rect;
-        }
-        private void Move(GameTime gameTime)
-        {
-            var direction = Directions.Normalize(level.Map.ConvertToWindowCoordinates((Vector2i)tileDestination) - Position);
-            var moveVector = speed * direction * gameTime.DeltaTime;
-            if (tileDestination != null 
-                && level.Map.GetTileGidInLayer((Vector2i)tileDestination, level.Map.collisionTiles) != Map.Wall
-                && !CheckCollisions(moveVector))
-            {
-                Position += moveVector;
-                Rotation = GetRotationDependingOnDirection(moveVector);
-                if (Directions.IsVectorsEqual(Position, pointDestination))
-                    tileDestination = null;
-            }
         }
 
         private float GetRotationDependingOnDirection(Vector2f direction)
@@ -112,6 +115,7 @@ namespace Tonight
 
         private void Patrol(GameTime gameTime)
         {
+            speed = 100;
             var rnd = random.Next(0, 100);
             if (rnd < 2)
             {
@@ -120,7 +124,7 @@ namespace Tonight
 
             var enemyTileCoordinates = level.Map.ConvertToTileCoordinates(Position);
             DiagonallyMove(enemyTileCoordinates + patrolDirection);
-            Move(gameTime);
+            PatrolMove(gameTime);
 
         }
         
@@ -129,10 +133,89 @@ namespace Tonight
             tileDestination = tilePoint;
             pointDestination = level.Map.ConvertToWindowCoordinates(tilePoint);
         }
+        
+        private void PatrolMove(GameTime gameTime)
+        {
+            if (tileDestination == null)
+                return;
+            var direction = Directions.Normalize(level.Map.ConvertToWindowCoordinates((Vector2i)tileDestination) - Position);
+            var moveVector = speed * direction * gameTime.DeltaTime;
+            if (level.Map.GetTileGidInLayer((Vector2i)tileDestination, level.Map.collisionTiles) != Map.Wall
+                && !CheckCollisions(moveVector))
+            {
+                Position += moveVector;
+                var oldRotation = Rotation;
+                Rotation = GetRotationDependingOnDirection(moveVector);
+                if (Directions.IsVectorsEqual(Position, pointDestination))
+                {
+                    tileDestination = null;
+                    state = EnemyState.Patrol;
+                }
+                viewZone.Position = Position;
+                viewZone.Rotate((Rotation - oldRotation) * (float) Math.PI / 180);
+            }
+        }
+        
+        private void Move(GameTime gameTime)
+        {
+            if (tileDestination == null)
+                return;
+
+            if (Directions.IsVectorsEqual(Position, pointDestination))
+            {
+                if (shortestPathToPoint == null || !shortestPathToPoint.MoveNext())
+                {
+                    state = EnemyState.Patrol;
+                    return;
+                }
+                tileDestination = shortestPathToPoint.Current;
+                pointDestination = level.Map.ConvertToWindowCoordinates((Vector2i)tileDestination);
+            }
+            
+            var direction = Directions.Normalize(level.Map.ConvertToWindowCoordinates((Vector2i)tileDestination) - Position);
+            var moveVector = speed * direction * gameTime.DeltaTime;
+            if (level.Map.GetTileGidInLayer((Vector2i)tileDestination, level.Map.collisionTiles) != Map.Wall
+                && !CheckCollisions(moveVector))
+            {
+                Position += moveVector;
+                var oldRotation = Rotation;
+                Rotation = GetRotationDependingOnDirection(moveVector);
+                viewZone.Position = Position;
+                viewZone.Rotate((Rotation - oldRotation) * (float) Math.PI / 180);
+            }
+        }
+        public void Shoot()
+        { 
+            level.Map.Bullets.Add(new Bullet(Position, level.GetPlayerCoordinates(),  level, this));
+        }
+
+        public void NotifyAboutShooting(Vector2f position)
+        {
+            var tiledPosition = level.Map.ConvertToTileCoordinates(Position);
+            var shootingPositionInTiles = level.Map.ConvertToTileCoordinates(position);
+            var path = level.Map.FindPathInTiles(tiledPosition, shootingPositionInTiles).Reverse();
+            if (path != null)
+            {
+                shortestPathToPoint = path.GetEnumerator();
+            }
+            else
+            {
+                shortestPathToPoint = null;
+            }
+            tileDestination = level.Map.ConvertToTileCoordinates(Position);
+            pointDestination = level.Map.ConvertToWindowCoordinates(tiledPosition);
+            speed = 300;
+            state = EnemyState.MovingToPoint;
+        }
         public void Update(GameTime gameTime)
         {
-            //SegmentToPlayer = new Segment();
-            Patrol(gameTime);
+            SegmentToPlayer = new Segment(Position, level.GetPlayerCoordinates());
+            if(state == EnemyState.Patrol)
+                Patrol(gameTime);
+            if (state == EnemyState.MovingToPoint)
+                Move(gameTime);
+            if(IsPlayerSeen())
+                Shoot();
         }
     }
 }

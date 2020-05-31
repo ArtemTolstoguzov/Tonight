@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
@@ -12,7 +6,7 @@ using static SFML.Window.Keyboard;
 
 namespace Tonight
 {
-    public class Hero : Sprite, IUpdatable, IEntity
+    public class Hero : Sprite, IUpdatable, IEntity, IShootable
     {
         public Image HeroImage;
         public bool IsAlive { get; set; }
@@ -31,18 +25,15 @@ namespace Tonight
             Position = position;
             sight = new Sight(window2D);
             window = window2D;
+            IsAlive = true;
         }
 
-        private void Shoot()
+        public void Shoot()
         {
             if (Mouse.IsButtonPressed(Mouse.Button.Left))
                 level.Map.Bullets.Add(new Bullet(Position, sight.Position,  level, this));
         }
-
-        public static float GetVectorLength(Vector2f vector)
-        {
-            return (float) Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
-        }
+        
         public void Update(GameTime gameTime)
         {
             sight.Update(gameTime);
@@ -63,7 +54,7 @@ namespace Tonight
 
         public bool CheckCollisions(Vector2f delta)
         {
-            var objects = level.Map.mapObjects["collision"];
+            var objects = level.Map.CollisionObjects;
 
             var collisionRect = GetSpriteRectangleWithoutRotation();
             collisionRect.Left += delta.X;
@@ -74,11 +65,11 @@ namespace Tonight
                     return true;
             }
 
-            foreach (var enemy in level.Enemies)
-            {
-                if (enemy.GetGlobalBounds().Intersects(collisionRect))
-                    return true;
-            }
+            // foreach (var enemy in level.Enemies)
+            // {
+            //     if (enemy.GetGlobalBounds().Intersects(collisionRect))
+            //         return true;
+            // }
 
             return false;
         }

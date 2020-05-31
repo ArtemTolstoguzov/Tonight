@@ -32,8 +32,25 @@ namespace Tonight
             direction = Normalize(sightPosition - heroPosition);
             Position = heroPosition;
             IsAlive = true;
+            if (owner == level.Player)
+            {
+                NotifyEnemiesAboutShooting(Position);
+            }
         }
 
+        private void NotifyEnemiesAboutShooting(Vector2f position)
+        {
+            var size = 800;
+            var hearZone = new RectangleShape(new Vector2f(size, size));
+            hearZone.Origin = new Vector2f(size / 2, size / 2);
+            hearZone.Position = position;
+            var rect = hearZone.GetGlobalBounds();
+            foreach (var enemy in level.Enemies)
+            {
+                if(rect.Intersects(enemy.GetGlobalBounds()))
+                    enemy.NotifyAboutShooting(position);
+            }
+        }
         public static Vector2f Normalize(Vector2f vector)
         {
             var length = (float)Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
@@ -52,7 +69,7 @@ namespace Tonight
         
         public bool CheckCollisions(Vector2f delta)
         {
-            var objects = level.Map.mapObjects["collision"];
+            var objects = level.Map.CollisionObjects;
             
             var collisionRect = GetGlobalBounds();
             collisionRect.Left += delta.X;

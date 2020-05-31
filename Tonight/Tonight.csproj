@@ -77,10 +77,12 @@
     <Compile Include="GameClasses\Directions.cs" />
     <Compile Include="GameClasses\Hero.cs" />
     <Compile Include="GameClasses\Map.cs" />
+    <Compile Include="GameClasses\Menu.cs" />
     <Compile Include="GameClasses\SecurityGuy.cs" />
     <Compile Include="GameClasses\Sight.cs" />
     <Compile Include="GameClasses\ViewZone.cs" />
     <Compile Include="Interfaces\IEntity.cs" />
+    <Compile Include="Interfaces\IShootable.cs" />
     <Compile Include="Interfaces\IUpdatable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -13,7 +13,7 @@ namespace Tonight
         private readonly Sprite background;
         private readonly Texture bgTexture;
 
-        public Window2D() : base(new VideoMode(800, 600, 24), "Tonight")
+        public Window2D() : base(new VideoMode(1920, 1080, 24), "Tonight")
         {
             bgTexture = new Texture("images/bg1.png");
             background = new Sprite(bgTexture);

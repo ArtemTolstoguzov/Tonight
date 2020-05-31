@@ -20,12 +20,14 @@
         <e p="Directions.cs" t="Include" />
         <e p="Hero.cs" t="Include" />
         <e p="Map.cs" t="Include" />
+        <e p="Menu.cs" t="Include" />
         <e p="SecurityGuy.cs" t="Include" />
         <e p="Sight.cs" t="Include" />
         <e p="ViewZone.cs" t="Include" />
       </e>
       <e p="Interfaces" t="Include">
         <e p="IEntity.cs" t="Include" />
+        <e p="IShootable.cs" t="Include" />
         <e p="IUpdatable.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive" />

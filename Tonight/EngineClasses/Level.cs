@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SFML.Graphics;
 using SFML.System;
@@ -8,7 +9,7 @@ namespace Tonight
     public class Level: GameProcess
     {
         public Map Map;
-        private Hero Player;
+        public Hero Player;
         public List<SecurityGuy> Enemies;
         private Camera camera;
         private string mapPath;
@@ -26,9 +27,14 @@ namespace Tonight
                 yield return enemy;
             }
         }
+
+        public Vector2f GetPlayerCoordinates()
+        {
+            return Player.Position;
+        }
         protected override void Initialize()
         {
-            camera = new Camera(800, 600);
+            camera = new Camera(1920, 1080);
             Map = new Map(mapPath, camera);
             Player = new Hero(Map.GetStartPlayerCoordinates(), window2D, this);
             Enemies = Map.GetEnemies().Select(o => new SecurityGuy(o.Position, this)).ToList();
@@ -61,10 +67,6 @@ namespace Tonight
             {
                 window2D.Draw(enemy);
             }
-                    
-                    
-                    
-            var path = Map.FindPathInTiles(new Vector2i(1, 2), new Vector2i(16, 30));
         }
     }
 }
