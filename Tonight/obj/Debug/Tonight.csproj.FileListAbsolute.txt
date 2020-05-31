@@ -47,3 +47,4 @@ C:\Git\Game\Tonight\Tonight\obj\Debug\Tonight.csproj.CoreCompileInputs.cache
 C:\Git\Game\Tonight\Tonight\obj\Debug\Tonight.csproj.CopyComplete
 C:\Git\Game\Tonight\Tonight\obj\Debug\Tonight.exe
 C:\Git\Game\Tonight\Tonight\obj\Debug\Tonight.pdb
+C:\GitProjects\Tonight\Tonight\obj\Debug\Tonight.csproj.CoreCompileInputs.cache

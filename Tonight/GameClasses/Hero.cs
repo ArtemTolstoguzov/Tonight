@@ -27,7 +27,7 @@ namespace Tonight
             TextureRect = new IntRect(0, 0, 49, 43);
             Scale = new Vector2f(1f, 1f);
             Origin = new Vector2f(GetLocalBounds().Width / 2, GetLocalBounds().Height / 2);
-            Position = new Vector2f(250, 150);
+            Position = new Vector2f(800, 700);
             sight = new Sight(window2D);
             window = window2D;
         }
@@ -46,6 +46,7 @@ namespace Tonight
         {
             sight.Update(gameTime);
             Move(gameTime);
+            
             RotateToCursor();
             Shoot();
         }

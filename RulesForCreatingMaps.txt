@@ -1,0 +1,7 @@
+! First layer name's is "CollisionTiles". It contains 86, 12 tiles only
+where:
+86 tile is solid tile
+12 tile is tile where enemy can step
+
+! There should be "collision" objects-layer
+! There should be "enemies" objects-layer

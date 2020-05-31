@@ -11,6 +11,8 @@
         <e p="GameTime.cs" t="Include" />
         <e p="Object.cs" t="Include" />
         <e p="Program.cs" t="Include" />
+        <e p="Segment.cs" t="Include" />
+        <e p="SinglyLinkedList.cs" t="Include" />
         <e p="Window2D.cs" t="Include" />
       </e>
       <e p="GameClasses" t="Include">
@@ -34,7 +36,7 @@
       <e p="Tonight.csproj" t="IncludeRecursive" />
       <e p="Tonight.sln" t="IncludeFlat" />
     </e>
-    <e p="C:\Users\savin\.Rider2019.3\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\savin\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_Tonight.-1380096092.00" t="ExcludeRecursive" />
+    <e p="C:\Users\savin\AppData\local\JetBrains\Rider2020.1\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\savin\AppData\local\JetBrains\Rider2020.1\resharper-host\local\Transient\ReSharperHost\v201\SolutionCaches\_Tonight.-1380096092.00" t="ExcludeRecursive" />
   </component>
 </project>

@@ -13,7 +13,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
-    <LangVersion>8</LangVersion>
+    <LangVersion>default</LangVersion>
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -70,6 +70,8 @@
     <Compile Include="EngineClasses\GameTime.cs" />
     <Compile Include="EngineClasses\Object.cs" />
     <Compile Include="EngineClasses\Program.cs" />
+    <Compile Include="EngineClasses\Segment.cs" />
+    <Compile Include="EngineClasses\SinglyLinkedList.cs" />
     <Compile Include="EngineClasses\Window2D.cs" />
     <Compile Include="GameClasses\Bullet.cs" />
     <Compile Include="GameClasses\Directions.cs" />

@@ -20,11 +20,10 @@ namespace Tonight
             var str = gameTime.TotalTimeElapsed + " " + gameTime.DeltaTime + " " + fps;
                       Console.WriteLine(str);
         }
-        
         public void Run()
         {
             var camera = new Camera(800, 600);
-            var map = new Map("maps/NiceTestMap.tmx", camera);
+            var map = new Map("maps/NiceTestMapV2.tmx", camera);
             var hero = new Hero(window2D, map);
             window2D.SetMouseCursorVisible(true);
 
@@ -71,7 +70,18 @@ namespace Tonight
                     {
                         window2D.Draw(enemy);
                     }
-
+                    
+                    
+                    
+                    var path = map.FindPathInTiles(new Vector2i(1, 2), new Vector2i(16, 30));
+                    var t = new RectangleShape(new Vector2f(64, 64));
+                    foreach (var v in path)
+                    {
+                        t.Position = map.ConvertToWindowCoordinates(v);
+                        t.Position = new Vector2f(t.Position.X - 32, t.Position.Y - 32);
+                        window2D.Draw(t);
+                    }
+                    
                     window2D.Display();
                     
                 }
