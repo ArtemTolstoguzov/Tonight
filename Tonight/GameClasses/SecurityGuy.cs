@@ -193,10 +193,10 @@ namespace Tonight
         {
             var tiledPosition = level.Map.ConvertToTileCoordinates(Position);
             var shootingPositionInTiles = level.Map.ConvertToTileCoordinates(position);
-            var path = level.Map.FindPathInTiles(tiledPosition, shootingPositionInTiles).Reverse();
+            var path = level.Map.FindPathInTiles(tiledPosition, shootingPositionInTiles);
             if (path != null)
             {
-                shortestPathToPoint = path.GetEnumerator();
+                shortestPathToPoint = path.Reverse().GetEnumerator();
             }
             else
             {

@@ -14,11 +14,12 @@ namespace Tonight
         private Camera camera;
         private string mapPath;
 
-        public Level(string mapPath)
+        public Level(string mapPath, Window2D window)
         {
             this.mapPath = mapPath;
+            window2D = window;
         }
-
+        
         public IEnumerable<IEntity> GetEntities()
         {
             yield return Player;
@@ -67,6 +68,11 @@ namespace Tonight
             {
                 window2D.Draw(enemy);
             }
+        }
+
+        protected override bool IsExit()
+        {
+            return !Enemies.Any() || !Player.IsAlive;
         }
     }
 }
