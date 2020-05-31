@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 using TiledSharp;
 using SFML.System;
 using SFML.Graphics;
@@ -18,7 +19,7 @@ namespace Tonight
         public readonly int WidthInTiles;
         public readonly int HeightInTiles;
         public readonly int TileSize;
-        public List<SecurityGuy> Enemies;
+        public Hero Player;
         public List<Bullet> Bullets;
         private readonly List<TmxLayer> layers;
         public readonly TmxLayer collisionTiles;
@@ -39,13 +40,12 @@ namespace Tonight
             mapObjects = ConvertObjects(tmxMap.ObjectGroups);
             Width = WidthInTiles * TileSize;
             Height = HeightInTiles * TileSize;
-            Enemies = mapObjects["enemies"]
-                .Select(o => new SecurityGuy(o.Position, this))
-                .ToList();
-            mapObjects["enemies"] = null;
             Bullets = new List<Bullet>();
         }
-        
+
+        public Vector2f GetStartPlayerCoordinates() => mapObjects["player"][0].Position;
+
+        public List<Object> GetEnemies() => mapObjects["enemies"];
         public bool IsSegmentIntersectsWithSolidObjects(Vector2f startSegment, Vector2f endSegment)
         {
             return true;
@@ -193,10 +193,6 @@ namespace Tonight
                        return b.IsAlive;
                    })
                    .ToList();
-            foreach (var e in Enemies)
-            {
-                e.Update(gameTime);
-            }
         }
     }
 }

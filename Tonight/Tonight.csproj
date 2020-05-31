@@ -66,8 +66,8 @@
   <ItemGroup>
     <Compile Include="EngineClasses\Camera.cs" />
     <Compile Include="EngineClasses\GameProcess.cs" />
-    <Compile Include="EngineClasses\GameProcessAbstract.cs" />
     <Compile Include="EngineClasses\GameTime.cs" />
+    <Compile Include="EngineClasses\Level.cs" />
     <Compile Include="EngineClasses\Object.cs" />
     <Compile Include="EngineClasses\Program.cs" />
     <Compile Include="EngineClasses\Segment.cs" />
@@ -80,6 +80,7 @@
     <Compile Include="GameClasses\SecurityGuy.cs" />
     <Compile Include="GameClasses\Sight.cs" />
     <Compile Include="GameClasses\ViewZone.cs" />
+    <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="Interfaces\IUpdatable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

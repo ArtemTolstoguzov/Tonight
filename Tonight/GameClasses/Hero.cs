@@ -12,22 +12,23 @@ using static SFML.Window.Keyboard;
 
 namespace Tonight
 {
-    public class Hero : Sprite, IUpdatable
+    public class Hero : Sprite, IUpdatable, IEntity
     {
         public Image HeroImage;
-        public Map map;
+        public bool IsAlive { get; set; }
+        private Level level;
         public Sight sight;
         private float speed = 500;
         private Window2D window;
-        public Hero(Window2D window2D, Map map)
+        public Hero(Vector2f position, Window2D window2D, Level level)
         {
-            this.map = map;
+            this.level = level;
             HeroImage = new Image("Sprites/Player/player_gun.png");
             Texture = new Texture(HeroImage);
             TextureRect = new IntRect(0, 0, 49, 43);
             Scale = new Vector2f(1f, 1f);
             Origin = new Vector2f(GetLocalBounds().Width / 2, GetLocalBounds().Height / 2);
-            Position = new Vector2f(800, 700);
+            Position = position;
             sight = new Sight(window2D);
             window = window2D;
         }
@@ -35,7 +36,7 @@ namespace Tonight
         private void Shoot()
         {
             if (Mouse.IsButtonPressed(Mouse.Button.Left))
-                map.Bullets.Add(new Bullet(Position, sight.Position,  map));
+                level.Map.Bullets.Add(new Bullet(Position, sight.Position,  level, this));
         }
 
         public static float GetVectorLength(Vector2f vector)
@@ -62,7 +63,7 @@ namespace Tonight
 
         public bool CheckCollisions(Vector2f delta)
         {
-            var objects = map.mapObjects["collision"];
+            var objects = level.Map.mapObjects["collision"];
 
             var collisionRect = GetSpriteRectangleWithoutRotation();
             collisionRect.Left += delta.X;
@@ -73,10 +74,16 @@ namespace Tonight
                     return true;
             }
 
+            foreach (var enemy in level.Enemies)
+            {
+                if (enemy.GetGlobalBounds().Intersects(collisionRect))
+                    return true;
+            }
+
             return false;
         }
 
-        private FloatRect GetSpriteRectangleWithoutRotation()
+        public FloatRect GetSpriteRectangleWithoutRotation()
         {
             var tempRotation = Rotation;
             Rotation = 0;

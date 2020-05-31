@@ -12,8 +12,10 @@ namespace Tonight
     {
         static void Main()
         {
-            var GameProcess = new GameProcess();
-            GameProcess.Run();
+            //var GameProcess = new GameProcess();
+            //GameProcess.Run();
+            var testLevel = new Level("maps/NiceTestMapV2.tmx");
+            testLevel.Run();
         }
     }
 }

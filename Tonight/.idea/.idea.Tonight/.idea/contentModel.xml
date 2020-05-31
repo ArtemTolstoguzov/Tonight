@@ -7,8 +7,8 @@
       <e p="EngineClasses" t="Include">
         <e p="Camera.cs" t="Include" />
         <e p="GameProcess.cs" t="Include" />
-        <e p="GameProcessAbstract.cs" t="Include" />
         <e p="GameTime.cs" t="Include" />
+        <e p="Level.cs" t="Include" />
         <e p="Object.cs" t="Include" />
         <e p="Program.cs" t="Include" />
         <e p="Segment.cs" t="Include" />
@@ -25,6 +25,7 @@
         <e p="ViewZone.cs" t="Include" />
       </e>
       <e p="Interfaces" t="Include">
+        <e p="IEntity.cs" t="Include" />
         <e p="IUpdatable.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive" />

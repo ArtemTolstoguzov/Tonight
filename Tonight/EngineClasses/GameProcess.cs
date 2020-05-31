@@ -1,91 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using SFML.System;
-using SFML.Window;
-using SFML.Audio;
-using SFML.Graphics;
-using TiledSharp;
+﻿using SFML.System;
 
 namespace Tonight
 {
-    public class GameProcess
+    public abstract class GameProcess
     {
-        private readonly Window2D window2D = new Window2D();
-        private GameTime gameTime = new GameTime();
+        protected readonly Window2D window2D = new Window2D();
         private const float TIME_BEFORE_UPDATE = 1f / 60;
-        private void ShowTime(GameTime gameTime)
-        {
-            var fps = (1f / gameTime.DeltaTime);
-            var str = gameTime.TotalTimeElapsed + " " + gameTime.DeltaTime + " " + fps;
-                      Console.WriteLine(str);
-        }
+        private GameTime gameTime = new GameTime();
         public void Run()
         {
-            var camera = new Camera(800, 600);
-            var map = new Map("maps/NiceTestMapV2.tmx", camera);
-            var hero = new Hero(window2D, map);
-            window2D.SetMouseCursorVisible(true);
-
-
             var totalTimeBeforeUpdate = 0f;
             var previousTimeElapsed = 0f;
-
             var clock = new Clock();
-            
+            Initialize();
             while (window2D.IsOpen)
             {
                 window2D.DispatchEvents();
+                
                 var totalTimeElapsed = clock.ElapsedTime.AsSeconds();
                 var deltaTime = totalTimeElapsed - previousTimeElapsed;
                 previousTimeElapsed = totalTimeElapsed;
-
                 totalTimeBeforeUpdate += deltaTime;
-
                 
                 if (totalTimeBeforeUpdate >= TIME_BEFORE_UPDATE)
                 {
                     gameTime.Update(totalTimeBeforeUpdate, totalTimeElapsed);
-                    camera.Move(hero, map);
-                    hero.Update(gameTime);
-                    map.Update(gameTime);
-
-                    //ShowTime(gameTime);
-                    //Console.WriteLine(map.Bullets.Count);
+                    Update(gameTime);
                     totalTimeBeforeUpdate = 0f;
-                    window2D.SetView(camera);
                     window2D.Clear();
                     window2D.DrawBG();
-                    window2D.Draw(map);
-
-                                                        ////It should be better
-                    window2D.Draw(hero);                //
-                    window2D.Draw(hero.sight);          //
-
-                    foreach (var bullet in map.Bullets)
-                    {
-                        window2D.Draw(bullet);
-                    }
-                    foreach (var enemy in map.Enemies)
-                    {
-                        window2D.Draw(enemy);
-                    }
-                    
-                    
-                    
-                    var path = map.FindPathInTiles(new Vector2i(1, 2), new Vector2i(16, 30));
-                    var t = new RectangleShape(new Vector2f(64, 64));
-                    foreach (var v in path)
-                    {
-                        t.Position = map.ConvertToWindowCoordinates(v);
-                        t.Position = new Vector2f(t.Position.X - 32, t.Position.Y - 32);
-                        window2D.Draw(t);
-                    }
-                    
+                    Draw();
                     window2D.Display();
-                    
                 }
+                
             }
+            
         }
+
+        protected abstract void Initialize();
+        protected abstract void Update(GameTime gameTime);
+        protected abstract void Draw();
     }
 }

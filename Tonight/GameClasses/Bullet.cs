@@ -5,18 +5,29 @@ using SFML.System;
 
 namespace Tonight
 {
-    public class Bullet:Sprite, IUpdatable
+    public class Bullet:Sprite, IUpdatable, IEntity
     {
-        public bool IsAlive { get; private set; }
-        private Vector2f direction;
-        private float speed = 700;
-        private static Image bulletImage = new Image("images/bullet.png");
-        private Map map;
-        public Bullet(Vector2f heroPosition, Vector2f sightPosition, Map map)
+        public bool IsAlive { get; set; }
+        private IEntity Owner;
+        public FloatRect GetSpriteRectangleWithoutRotation()
         {
-            this.map = map;
-            bulletImage.CreateMaskFromColor(Color.Black);
-            Texture = new Texture(bulletImage);
+            var tempRotation = Rotation;
+            Rotation = 0;
+            var rect = GetGlobalBounds();
+            Rotation = tempRotation;
+            return rect;
+        }
+
+        private readonly Vector2f direction;
+        private float speed = 700;
+        private static readonly Image BulletImage = new Image("images/bullet.png");
+        private readonly Level level;
+        public Bullet(Vector2f heroPosition, Vector2f sightPosition, Level level, IEntity owner)
+        {
+            Owner = owner;
+            this.level = level;
+            BulletImage.CreateMaskFromColor(Color.Black);
+            Texture = new Texture(BulletImage);
             TextureRect = new IntRect(0, 0, 16, 16);
             direction = Normalize(sightPosition - heroPosition);
             Position = heroPosition;
@@ -41,7 +52,7 @@ namespace Tonight
         
         public bool CheckCollisions(Vector2f delta)
         {
-            var objects = map.mapObjects["collision"];
+            var objects = level.Map.mapObjects["collision"];
             
             var collisionRect = GetGlobalBounds();
             collisionRect.Left += delta.X;
@@ -53,12 +64,12 @@ namespace Tonight
                     return true;
                 }
             }
-            foreach (var enemy in map.Enemies)
+            foreach (var entity in level.GetEntities())
             {
-                if (enemy.GetGlobalBounds().Intersects(collisionRect))
+                if (entity != Owner  && entity.GetSpriteRectangleWithoutRotation().Intersects(collisionRect))
                 {
-                    enemy.IsAlive = false;
-                    map.Enemies = map.Enemies.Where(e => e.IsAlive).ToList();
+                    entity.IsAlive = false;
+                    level.Enemies = level.Enemies.Where(e => e.IsAlive).ToList();
                     return true;
                 }
             }

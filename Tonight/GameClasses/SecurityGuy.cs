@@ -14,15 +14,16 @@ namespace Tonight
         MovingToPoint,
         Shoot
     }
-    public class SecurityGuy : Sprite, IUpdatable
+    public class SecurityGuy : Sprite, IUpdatable, IEntity
     {
         public List<Bullet> Bullets { get; set; }
+
         public bool IsAlive { get; set; }
         public Segment SegmentToPlayer;
         private EnemyState state;
         private Image SecurityGuyImage;
         private ViewZone viewZone;
-        private Map map;
+        private Level level;
         private static Random random = new Random();
         private Vector2i? tileDestination;
         private Vector2f pointDestination;
@@ -30,10 +31,9 @@ namespace Tonight
         private const float speed = 100;
         private Hero hero;
 
-        public SecurityGuy(Vector2f position, Map map)
+        public SecurityGuy(Vector2f position, Level level)
         {
-            this.hero = hero;
-            this.map = map;
+            this.level = level;
             SecurityGuyImage = new Image("Sprites/SecurityGuy/security_gun.png");
             SecurityGuyImage.CreateMaskFromColor(Color.White);
             Texture = new Texture(SecurityGuyImage);
@@ -48,21 +48,21 @@ namespace Tonight
         public bool CheckCollisions(Vector2f delta)
         {
             var countColiisions = 0;
-            var enemies = map.Enemies;
+            var entities = level.GetEntities();
 
             var collisionRect = GetSpriteRectangleWithoutRotation();
             collisionRect.Left += delta.X;
             collisionRect.Top += delta.Y;
-            foreach (var enemy in enemies)
+            foreach (var entity in entities)
             {
-                if (enemy.GetSpriteRectangleWithoutRotation().Intersects(collisionRect))
+                if (entity.GetSpriteRectangleWithoutRotation().Intersects(collisionRect))
                     countColiisions++;
             }
 
             return countColiisions > 1;
         }
         
-        private FloatRect GetSpriteRectangleWithoutRotation()
+        public FloatRect GetSpriteRectangleWithoutRotation()
         {
             var tempRotation = Rotation;
             Rotation = 0;
@@ -72,10 +72,10 @@ namespace Tonight
         }
         private void Move(GameTime gameTime)
         {
-            var direction = Directions.Normalize(map.ConvertToWindowCoordinates((Vector2i)tileDestination) - Position);
+            var direction = Directions.Normalize(level.Map.ConvertToWindowCoordinates((Vector2i)tileDestination) - Position);
             var moveVector = speed * direction * gameTime.DeltaTime;
             if (tileDestination != null 
-                && map.GetTileGidInLayer((Vector2i)tileDestination, map.collisionTiles) != Map.Wall
+                && level.Map.GetTileGidInLayer((Vector2i)tileDestination, level.Map.collisionTiles) != Map.Wall
                 && !CheckCollisions(moveVector))
             {
                 Position += moveVector;
@@ -118,7 +118,7 @@ namespace Tonight
                 patrolDirection = Directions.GetIntDirection((DirectionsEnum) random.Next(0, 8));
             }
 
-            var enemyTileCoordinates = map.ConvertToTileCoordinates(Position);
+            var enemyTileCoordinates = level.Map.ConvertToTileCoordinates(Position);
             DiagonallyMove(enemyTileCoordinates + patrolDirection);
             Move(gameTime);
 
@@ -127,7 +127,7 @@ namespace Tonight
         private void DiagonallyMove(Vector2i tilePoint)
         {
             tileDestination = tilePoint;
-            pointDestination = map.ConvertToWindowCoordinates(tilePoint);
+            pointDestination = level.Map.ConvertToWindowCoordinates(tilePoint);
         }
         public void Update(GameTime gameTime)
         {
