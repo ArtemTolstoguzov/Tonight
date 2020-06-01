@@ -3,28 +3,30 @@ using SFML.Window;
 
 namespace Tonight
 {
+    public enum GameResult
+    {
+        Win,
+        Lose,
+        Escape,
+        InProcess
+    }
     public abstract class GameProcess
     {
         protected Window2D window2D;
         private const float TIME_BEFORE_UPDATE = 1f / 60;
         private GameTime gameTime = new GameTime();
-        private bool isPause = false;
-        public void Run()
+        private GameResult exitCode;
+        public GameResult Run()
         {
+            exitCode = GameResult.InProcess;
             var totalTimeBeforeUpdate = 0f;
             var previousTimeElapsed = 0f;
             var clock = new Clock();
             Initialize();
             window2D.SetKeyRepeatEnabled(false);
             window2D.SetMouseCursorVisible(false);
-            while (window2D.IsOpen && !IsExit())
+            while (window2D.IsOpen && exitCode == GameResult.InProcess)
             {
-                if (Keyboard.IsKeyPressed(Keyboard.Key.Escape))
-                {
-                    isPause = true;
-                    break;
-                }
-
                 window2D.DispatchEvents();
                 
                 var totalTimeElapsed = clock.ElapsedTime.AsSeconds();
@@ -42,12 +44,16 @@ namespace Tonight
                     Draw();
                     window2D.Display();
                 }
+
+                exitCode = GetExitCode();
             }
+
+            return exitCode;
         }
 
         protected abstract void Initialize();
         protected abstract void Update(GameTime gameTime);
         protected abstract void Draw();
-        protected abstract bool IsExit();
+        protected abstract GameResult GetExitCode();
     }
 }

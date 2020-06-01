@@ -19,7 +19,6 @@ namespace Tonight
         public readonly int WidthInTiles;
         public readonly int HeightInTiles;
         public readonly int TileSize;
-        public Hero Player;
         public List<Bullet> Bullets;
         private readonly List<TmxLayer> layers;
         public readonly TmxLayer collisionTiles;
@@ -51,6 +50,9 @@ namespace Tonight
         
         public int GetTileGidInLayer(Vector2i mapPoint, TmxLayer layer)
         {
+            var index = mapPoint.X + mapPoint.Y * WidthInTiles;
+            if (index < 0 || index >= layer.Tiles.Count)
+                return layer.Tiles[0].Gid;
             return layer.Tiles[mapPoint.X + mapPoint.Y * WidthInTiles].Gid;
         }
         public SinglyLinkedList<Vector2i> FindPathInTiles(Vector2i from, Vector2i to)

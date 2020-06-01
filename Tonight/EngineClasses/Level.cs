@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SFML.Graphics;
 using SFML.System;
+using SFML.Window;
 
 namespace Tonight
 {
@@ -70,9 +71,15 @@ namespace Tonight
             }
         }
 
-        protected override bool IsExit()
+        protected override GameResult GetExitCode()
         {
-            return !Enemies.Any() || !Player.IsAlive;
+            if (Keyboard.IsKeyPressed(Keyboard.Key.Escape))
+                return GameResult.Escape;
+            if (!Enemies.Any())
+                return GameResult.Win;
+            if (!Player.IsAlive)
+                return GameResult.Lose;
+            return GameResult.InProcess;
         }
     }
 }

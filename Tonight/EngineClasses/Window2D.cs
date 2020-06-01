@@ -13,9 +13,9 @@ namespace Tonight
         private readonly Sprite background;
         private readonly Texture bgTexture;
 
-        public Window2D() : base(new VideoMode(1920, 1080, 24), "MarcelKey")
+        public Window2D() : base(new VideoMode(1920, 1080, 24), "MarcelKey", Styles.Fullscreen)
         {
-            bgTexture = new Texture("images/bg1.png");
+            bgTexture = new Texture("images/bg.png");
             background = new Sprite(bgTexture);
 
             base.SetFramerateLimit(80);
