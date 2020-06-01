@@ -1,8 +1,5 @@
 C:\GitProjects\Tonight\Tonight\obj\Release\Tonight.csprojAssemblyReference.cache
 C:\GitProjects\Tonight\Tonight\obj\Release\Tonight.csproj.CoreCompileInputs.cache
-C:\GitProjects\Tonight\Tonight\bin\Release\Tonight.exe.config
-C:\GitProjects\Tonight\Tonight\bin\Release\Tonight.exe
-C:\GitProjects\Tonight\Tonight\bin\Release\Tonight.pdb
 C:\GitProjects\Tonight\Tonight\bin\Release\TiledSharp.dll
 C:\GitProjects\Tonight\Tonight\bin\Release\sfmlnet-audio-2.pdb
 C:\GitProjects\Tonight\Tonight\bin\Release\sfmlnet-audio-2.xml
@@ -13,5 +10,8 @@ C:\GitProjects\Tonight\Tonight\bin\Release\sfmlnet-system-2.xml
 C:\GitProjects\Tonight\Tonight\bin\Release\sfmlnet-window-2.pdb
 C:\GitProjects\Tonight\Tonight\bin\Release\sfmlnet-window-2.xml
 C:\GitProjects\Tonight\Tonight\obj\Release\Tonight.csproj.CopyComplete
-C:\GitProjects\Tonight\Tonight\obj\Release\Tonight.exe
-C:\GitProjects\Tonight\Tonight\obj\Release\Tonight.pdb
+C:\GitProjects\Tonight\Tonight\bin\Release\MarcelKey.exe.config
+C:\GitProjects\Tonight\Tonight\bin\Release\MarcelKey.exe
+C:\GitProjects\Tonight\Tonight\bin\Release\MarcelKey.pdb
+C:\GitProjects\Tonight\Tonight\obj\Release\MarcelKey.exe
+C:\GitProjects\Tonight\Tonight\obj\Release\MarcelKey.pdb

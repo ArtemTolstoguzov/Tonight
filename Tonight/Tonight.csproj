@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{95B76273-71EA-4CC3-BBCF-5D1AD12E94CF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Tonight</RootNamespace>
-    <AssemblyName>Tonight</AssemblyName>
+    <RootNamespace>MarcelKey</RootNamespace>
+    <AssemblyName>MarcelKey</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

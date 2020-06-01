@@ -1,6 +1,3 @@
-C:\GitProjects\Tonight\Tonight\bin\Debug\Tonight.exe.config
-C:\GitProjects\Tonight\Tonight\bin\Debug\Tonight.exe
-C:\GitProjects\Tonight\Tonight\bin\Debug\Tonight.pdb
 C:\GitProjects\Tonight\Tonight\bin\Debug\sfmlnet-audio-2.pdb
 C:\GitProjects\Tonight\Tonight\bin\Debug\sfmlnet-audio-2.xml
 C:\GitProjects\Tonight\Tonight\bin\Debug\sfmlnet-graphics-2.pdb
@@ -11,8 +8,6 @@ C:\GitProjects\Tonight\Tonight\bin\Debug\sfmlnet-window-2.pdb
 C:\GitProjects\Tonight\Tonight\bin\Debug\sfmlnet-window-2.xml
 C:\GitProjects\Tonight\Tonight\obj\Debug\Tonight.csprojAssemblyReference.cache
 C:\GitProjects\Tonight\Tonight\obj\Debug\Tonight.csproj.CopyComplete
-C:\GitProjects\Tonight\Tonight\obj\Debug\Tonight.exe
-C:\GitProjects\Tonight\Tonight\obj\Debug\Tonight.pdb
 C:\Git\Tonight\Tonight\bin\Debug\Tonight.exe.config
 C:\Git\Tonight\Tonight\bin\Debug\Tonight.exe
 C:\Git\Tonight\Tonight\bin\Debug\Tonight.pdb
@@ -48,3 +43,8 @@ C:\Git\Game\Tonight\Tonight\obj\Debug\Tonight.csproj.CopyComplete
 C:\Git\Game\Tonight\Tonight\obj\Debug\Tonight.exe
 C:\Git\Game\Tonight\Tonight\obj\Debug\Tonight.pdb
 C:\GitProjects\Tonight\Tonight\obj\Debug\Tonight.csproj.CoreCompileInputs.cache
+C:\GitProjects\Tonight\Tonight\bin\Debug\MarcelKey.exe.config
+C:\GitProjects\Tonight\Tonight\bin\Debug\MarcelKey.exe
+C:\GitProjects\Tonight\Tonight\bin\Debug\MarcelKey.pdb
+C:\GitProjects\Tonight\Tonight\obj\Debug\MarcelKey.exe
+C:\GitProjects\Tonight\Tonight\obj\Debug\MarcelKey.pdb

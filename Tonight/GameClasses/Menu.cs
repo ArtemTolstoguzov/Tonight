@@ -13,7 +13,7 @@ namespace Tonight
         Back,
         HouseLevel,
         DrugDenLevel,
-        CorridorLevel
+        HallwayLevel
     }
 
     enum MenuType
@@ -28,6 +28,7 @@ namespace Tonight
         private Sprite exitButton;
         private Sprite houseLevelButton;
         private Sprite drugDenLevelButton;
+        private Sprite hallwayLevelButton;
         private Sprite backButton;
         private Color originalButtonColor;
         private Color mouseColor;
@@ -64,6 +65,11 @@ namespace Tonight
             var drugDenLevelButtonTexture = new Texture(drugDenLevelButtonImage);
             drugDenLevelButton = new Sprite(drugDenLevelButtonTexture);
             
+            var hallwayLevelButtonImage = new Image("images/hallwayLevelButton.png");
+            hallwayLevelButtonImage.CreateMaskFromColor(Color.Black);
+            var hallwayLevelButtonTexture = new Texture(hallwayLevelButtonImage);
+            hallwayLevelButton = new Sprite(hallwayLevelButtonTexture);
+            
             var backButtonImage = new Image("images/backButton.png");
             backButtonImage.CreateMaskFromColor(Color.Black);
             var backButtonTexture = new Texture(backButtonImage);
@@ -80,15 +86,19 @@ namespace Tonight
 
             houseLevelButton.Origin = new Vector2f(houseLevelButton.GetLocalBounds().Width / 2,
                 houseLevelButton.GetLocalBounds().Height / 2);
-            houseLevelButton.Position = new Vector2f(970, 640);
+            houseLevelButton.Position = new Vector2f(970, 590);
 
             drugDenLevelButton.Origin = new Vector2f(drugDenLevelButton.GetLocalBounds().Width / 2,
                 drugDenLevelButton.GetLocalBounds().Height / 2);
-            drugDenLevelButton.Position = new Vector2f(970, 770);
+            drugDenLevelButton.Position = new Vector2f(970, 720);
+            
+            hallwayLevelButton.Origin = new Vector2f(hallwayLevelButton.GetLocalBounds().Width / 2,
+                hallwayLevelButton.GetLocalBounds().Height / 2);
+            hallwayLevelButton.Position = new Vector2f(970, 850);
 
             backButton.Origin =
                 new Vector2f(backButton.GetLocalBounds().Width / 2, backButton.GetLocalBounds().Height / 2);
-            backButton.Position = new Vector2f(970, 900);
+            backButton.Position = new Vector2f(970, 980);
             
             originalButtonColor = playButton.Color;
             mouseColor = new Color(232, 106, 23);
@@ -145,6 +155,15 @@ namespace Tonight
                         }
                         window2D.SetView(new Camera(1920, 1080));
                         break;
+                    case Buttons.HallwayLevel:
+                        selectedButton = Buttons.None;
+                        result = GameResult.InProcess;
+                        while (result == GameResult.Lose || result == GameResult.InProcess)
+                        {
+                            result = new Level("maps/HallwayMap.tmx", window2D).Run();
+                        }
+                        window2D.SetView(new Camera(1920, 1080));
+                        break;
                 }
             }
         }
@@ -165,6 +184,8 @@ namespace Tonight
                     selectedButton = Buttons.Back;
                 if (drugDenLevelButton.GetGlobalBounds().Contains(Mouse.GetPosition().X, Mouse.GetPosition().Y))
                     selectedButton = Buttons.DrugDenLevel;
+                if (hallwayLevelButton.GetGlobalBounds().Contains(Mouse.GetPosition().X, Mouse.GetPosition().Y))
+                    selectedButton = Buttons.HallwayLevel;
             }
         }
         private void UpdateButtonsColor()
@@ -190,6 +211,11 @@ namespace Tonight
             else
                 drugDenLevelButton.Color = originalButtonColor;
             
+            if (hallwayLevelButton.GetGlobalBounds().Contains(Mouse.GetPosition().X, Mouse.GetPosition().Y))
+                hallwayLevelButton.Color = mouseColor;
+            else
+                hallwayLevelButton.Color = originalButtonColor;
+            
             if (backButton.GetGlobalBounds().Contains(Mouse.GetPosition().X, Mouse.GetPosition().Y))
                 backButton.Color = mouseColor;
             else
@@ -210,6 +236,7 @@ namespace Tonight
             {
                 window2D.Draw(houseLevelButton);
                 window2D.Draw(drugDenLevelButton);
+                window2D.Draw(hallwayLevelButton);
                 window2D.Draw(backButton);
             }
             window2D.Draw(cursor);
