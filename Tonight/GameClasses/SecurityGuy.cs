@@ -28,8 +28,10 @@ namespace Tonight
         private Vector2f pointDestination;
         private IEnumerator<Vector2i> shortestPathToPoint;
         private Vector2i patrolDirection;
-        private float speed = 100;
+        private float speed = 200;
         private Hero hero;
+        private const float timeForSingleShot = 0.05f;
+        private float timeSinceLastShot;
 
         public SecurityGuy(Vector2f position, Level level)
         {
@@ -44,6 +46,7 @@ namespace Tonight
             viewZone = new ViewZone(600, (float) (Math.PI / 1.4));
             IsAlive = true;
             state = EnemyState.Patrol;
+            timeSinceLastShot = 0f;
         }
 
         public bool IsPlayerSeen()
@@ -115,7 +118,7 @@ namespace Tonight
 
         private void Patrol(GameTime gameTime)
         {
-            speed = 100;
+            speed = 200;
             var rnd = random.Next(0, 100);
             if (rnd < 2)
             {
@@ -185,8 +188,12 @@ namespace Tonight
             }
         }
         public void Shoot()
-        { 
-            level.Map.Bullets.Add(new Bullet(Position, level.GetPlayerCoordinates(),  level, this));
+        {
+            if (timeSinceLastShot >= timeForSingleShot)
+            {
+                level.Map.Bullets.Add(new Bullet(Position, level.GetPlayerCoordinates(),  level, this));
+                timeSinceLastShot = 0f;
+            }
         }
 
         public void NotifyAboutShooting(Vector2f position)
@@ -204,11 +211,12 @@ namespace Tonight
             }
             tileDestination = level.Map.ConvertToTileCoordinates(Position);
             pointDestination = level.Map.ConvertToWindowCoordinates(tiledPosition);
-            speed = 300;
+            speed = 400;
             state = EnemyState.MovingToPoint;
         }
         public void Update(GameTime gameTime)
         {
+            timeSinceLastShot += gameTime.DeltaTime;
             SegmentToPlayer = new Segment(Position, level.GetPlayerCoordinates());
             if(state == EnemyState.Patrol)
                 Patrol(gameTime);

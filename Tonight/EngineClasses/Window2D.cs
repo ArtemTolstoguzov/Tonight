@@ -18,9 +18,8 @@ namespace Tonight
             bgTexture = new Texture("images/bg.png");
             background = new Sprite(bgTexture);
 
-            base.SetFramerateLimit(80);
-            base.Closed += Window2DClosed;
-            
+            base.SetFramerateLimit(60);
+            Closed += Window2DClosed;
         }
 
         private void Window2DClosed(object sender, EventArgs e)

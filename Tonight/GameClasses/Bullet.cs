@@ -40,7 +40,7 @@ namespace Tonight
 
         private void NotifyEnemiesAboutShooting(Vector2f position)
         {
-            var size = 800;
+            var size = 1000;
             var hearZone = new RectangleShape(new Vector2f(size, size));
             hearZone.Origin = new Vector2f(size / 2, size / 2);
             hearZone.Position = position;

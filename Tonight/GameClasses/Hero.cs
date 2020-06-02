@@ -14,6 +14,8 @@ namespace Tonight
         public Sight sight;
         private float speed = 500;
         private Window2D window;
+        private const float timeForSingleShot = 0.25f;
+        private float timeSinceLastShot;
         public Hero(Vector2f position, Window2D window2D, Level level)
         {
             this.level = level;
@@ -26,12 +28,16 @@ namespace Tonight
             sight = new Sight(window2D);
             window = window2D;
             IsAlive = true;
+            timeSinceLastShot = 0f;
         }
 
         public void Shoot()
         {
-            if (Mouse.IsButtonPressed(Mouse.Button.Left))
+            if (Mouse.IsButtonPressed(Mouse.Button.Left) && timeSinceLastShot >= timeForSingleShot)
+            {
                 level.Map.Bullets.Add(new Bullet(Position, sight.Position,  level, this));
+                timeSinceLastShot = 0f;
+            }
         }
         
         public void Update(GameTime gameTime)
@@ -40,6 +46,8 @@ namespace Tonight
             Move(gameTime);
             
             RotateToCursor();
+
+            timeSinceLastShot += gameTime.DeltaTime;
             Shoot();
         }
 
