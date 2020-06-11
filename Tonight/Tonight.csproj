@@ -78,7 +78,9 @@
     <Compile Include="GameClasses\Hero.cs" />
     <Compile Include="GameClasses\Map.cs" />
     <Compile Include="GameClasses\Menu.cs" />
+    <Compile Include="GameClasses\Pistol.cs" />
     <Compile Include="GameClasses\SecurityGuy.cs" />
+    <Compile Include="GameClasses\Shotgun.cs" />
     <Compile Include="GameClasses\Sight.cs" />
     <Compile Include="GameClasses\ViewZone.cs" />
     <Compile Include="Interfaces\IEntity.cs" />

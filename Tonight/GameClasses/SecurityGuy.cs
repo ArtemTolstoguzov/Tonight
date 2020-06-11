@@ -30,7 +30,7 @@ namespace Tonight
         private Vector2i patrolDirection;
         private float speed = 200;
         private Hero hero;
-        private const float timeForSingleShot = 0.05f;
+        private const float timeForSingleShot = 0.15f;
         private float timeSinceLastShot;
 
         public SecurityGuy(Vector2f position, Level level)
@@ -191,7 +191,8 @@ namespace Tonight
         {
             if (timeSinceLastShot >= timeForSingleShot)
             {
-                level.Map.Bullets.Add(new Bullet(Position, level.GetPlayerCoordinates(),  level, this));
+                Pistol.Shoot(level, Position, level.GetPlayerCoordinates(), this);
+                //level.Map.Bullets.Add(new Bullet(Position, level.GetPlayerCoordinates(),  level, this));
                 timeSinceLastShot = 0f;
             }
         }

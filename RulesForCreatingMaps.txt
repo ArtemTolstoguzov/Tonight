@@ -5,3 +5,4 @@ where:
 
 ! There should be "collision" objects-layer
 ! There should be "enemies" objects-layer
+! There should be "shotguns" objects-layer

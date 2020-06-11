@@ -15,3 +15,7 @@ C:\GitProjects\Tonight\Tonight\bin\Release\MarcelKey.exe
 C:\GitProjects\Tonight\Tonight\bin\Release\MarcelKey.pdb
 C:\GitProjects\Tonight\Tonight\obj\Release\MarcelKey.exe
 C:\GitProjects\Tonight\Tonight\obj\Release\MarcelKey.pdb
+C:\GitProjects\Tonight\Tonight\bin\Release\sfmlnet-audio-2.dll
+C:\GitProjects\Tonight\Tonight\bin\Release\sfmlnet-graphics-2.dll
+C:\GitProjects\Tonight\Tonight\bin\Release\sfmlnet-system-2.dll
+C:\GitProjects\Tonight\Tonight\bin\Release\sfmlnet-window-2.dll

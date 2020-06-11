@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.3" orientation="orthogonal" renderorder="right-down" width="42" height="42" tilewidth="64" tileheight="64" infinite="0" nextlayerid="10" nextobjectid="178">
+<map version="1.2" tiledversion="1.3.3" orientation="orthogonal" renderorder="right-down" width="42" height="42" tilewidth="64" tileheight="64" infinite="0" nextlayerid="11" nextobjectid="187">
  <tileset firstgid="1" source="spritesheet_tiles.tsx"/>
  <layer id="1" name="CollisionTiles" width="42" height="42">
   <data encoding="csv">
@@ -309,12 +309,6 @@
   <object id="156" x="1633.33" y="869.697">
    <point/>
   </object>
-  <object id="157" x="354.545" y="812.121">
-   <point/>
-  </object>
-  <object id="158" x="357.576" y="872.727">
-   <point/>
-  </object>
   <object id="159" x="2348.48" y="1318.18">
    <point/>
   </object>
@@ -351,9 +345,20 @@
   <object id="170" x="1239.39" y="1957.58">
    <point/>
   </object>
+  <object id="185" x="417.333" y="933.333">
+   <point/>
+  </object>
+  <object id="186" x="925.333" y="866.667">
+   <point/>
+  </object>
  </objectgroup>
  <objectgroup id="8" name="player">
   <object id="172" x="300" y="309.091">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="10" name="shotguns">
+  <object id="181" x="1468" y="576">
    <point/>
   </object>
  </objectgroup>

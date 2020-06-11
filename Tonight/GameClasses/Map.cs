@@ -12,6 +12,7 @@ namespace Tonight
 {
     public class Map : Drawable, IUpdatable
     {
+        private static Random random = new Random();
         public const int Wall = 86;
         public readonly TmxMap tmxMap;
         public readonly float Width;
@@ -20,6 +21,7 @@ namespace Tonight
         public readonly int HeightInTiles;
         public readonly int TileSize;
         public List<Bullet> Bullets;
+        public List<Sprite> Shotguns;
         private readonly List<TmxLayer> layers;
         public readonly TmxLayer collisionTiles;
         private readonly Dictionary<int, Tuple<IntRect, Texture>> matchingGidTexture;
@@ -41,7 +43,21 @@ namespace Tonight
             Width = WidthInTiles * TileSize;
             Height = HeightInTiles * TileSize;
             CollisionObjects = mapObjects["collision"];
+            Shotguns = new List<Sprite>();
+            var shotgunImage = new Image("images/weapons.png");
+            var textureShotgun = new Texture(shotgunImage);
+            foreach (var s in mapObjects["shotguns"])
+            {
+                var sprite = new Sprite(textureShotgun);
+                sprite.TextureRect = new IntRect(423, 30, 129, 70);
+                sprite.Position = s.Position;
+                sprite.Scale = new Vector2f((float)0.3, (float)0.3);
+                sprite.Rotation = random.Next(-180, 180);
+                Shotguns.Add(sprite);
+            }
+
             Bullets = new List<Bullet>();
+
         }
 
         public Vector2f GetStartPlayerCoordinates() => mapObjects["player"][0].Position;

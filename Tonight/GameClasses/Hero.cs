@@ -6,18 +6,28 @@ using static SFML.Window.Keyboard;
 
 namespace Tonight
 {
+    public enum Weapons
+    {
+        Pistol,
+        Shotgun
+    }
     public class Hero : Sprite, IUpdatable, IEntity, IShootable
     {
+        public const float bonusTime = 5;
+        public float elapsedBonusTime;
+        public Weapons weapon;
         public Image HeroImage;
         public bool IsAlive { get; set; }
         private Level level;
         public Sight sight;
         private float speed = 500;
         private Window2D window;
-        private const float timeForSingleShot = 0.25f;
+        private const float timeForSingleShot = 0.3f;
         private float timeSinceLastShot;
         public Hero(Vector2f position, Window2D window2D, Level level)
         {
+            elapsedBonusTime = 0;
+            weapon = Weapons.Pistol;
             this.level = level;
             HeroImage = new Image("Sprites/Player/player_gun.png");
             Texture = new Texture(HeroImage);
@@ -35,7 +45,10 @@ namespace Tonight
         {
             if (Mouse.IsButtonPressed(Mouse.Button.Left) && timeSinceLastShot >= timeForSingleShot)
             {
-                level.Map.Bullets.Add(new Bullet(Position, sight.Position,  level, this));
+                if (weapon == Weapons.Pistol)
+                    Pistol.Shoot(level, Position, sight.Position, this);
+                if (weapon == Weapons.Shotgun)
+                    Shotgun.Shoot(level, Position, sight.Position, this);
                 timeSinceLastShot = 0f;
             }
         }
@@ -43,12 +56,40 @@ namespace Tonight
         public void Update(GameTime gameTime)
         {
             sight.Update(gameTime);
-            Move(gameTime);
+
+            var heroRect = GetGlobalBounds();
+            Sprite bonus = null;
+            foreach (var s in level.Map.Shotguns)
+            {
+                if (heroRect.Intersects(s.GetGlobalBounds()))
+                {
+                    bonus = s;
+                    weapon = Weapons.Shotgun;
+                    elapsedBonusTime = 0f;
+                    break;
+                }
+            }
+            if (bonus != null)
+            {
+                level.Map.Shotguns.Remove(bonus);
+                bonus = null;
+            }
             
+            Move(gameTime);
             RotateToCursor();
 
             timeSinceLastShot += gameTime.DeltaTime;
             Shoot();
+
+            if (weapon == Weapons.Shotgun)
+            {
+                elapsedBonusTime += gameTime.DeltaTime;
+            }
+            if (elapsedBonusTime >= bonusTime)
+            {
+                elapsedBonusTime = 0f;
+                weapon = Weapons.Pistol;
+            }
         }
 
         

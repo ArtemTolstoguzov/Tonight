@@ -2,6 +2,7 @@
 using System.Linq;
 using SFML.Graphics;
 using SFML.System;
+using SFML.Audio;
 
 namespace Tonight
 {
@@ -19,8 +20,9 @@ namespace Tonight
         }
 
         private readonly Vector2f direction;
-        private float speed = 700;
+        private float speed = 1000;
         private static readonly Image BulletImage = new Image("images/bullet.png");
+
         private readonly Level level;
         public Bullet(Vector2f heroPosition, Vector2f sightPosition, Level level, IEntity owner)
         {
@@ -28,7 +30,7 @@ namespace Tonight
             this.level = level;
             BulletImage.CreateMaskFromColor(Color.Black);
             Texture = new Texture(BulletImage);
-            TextureRect = new IntRect(0, 0, 16, 16);
+            TextureRect = new IntRect(0, 0, 21, 10); //16 16
             direction = Normalize(sightPosition - heroPosition);
             Position = heroPosition;
             IsAlive = true;
@@ -36,6 +38,7 @@ namespace Tonight
             {
                 NotifyEnemiesAboutShooting(Position);
             }
+            Rotation = (float) (Math.Atan2(direction.Y, direction.X) * 180 / Math.PI);
         }
 
         private void NotifyEnemiesAboutShooting(Vector2f position)

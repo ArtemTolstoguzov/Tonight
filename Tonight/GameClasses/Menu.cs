@@ -2,6 +2,7 @@
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
+using SFML.Audio;
 
 namespace Tonight
 {
@@ -36,12 +37,18 @@ namespace Tonight
         private Buttons selectedButton;
         private MenuType menuType;
 
+        private Music music;
+
         public Menu(Window2D window)
         {
             window2D = window;
         }
         protected override void Initialize()
         {
+            music = new Music("sounds/MarcelKey.ogg");
+            music.Loop = true;
+            music.Play();
+
             var backgroundTexture = new Texture("images/mainMenu.png");
             background = new Sprite(backgroundTexture);
             
@@ -172,20 +179,40 @@ namespace Tonight
             if (menuType == MenuType.Main)
             {
                 if (playButton.GetGlobalBounds().Contains(Mouse.GetPosition().X, Mouse.GetPosition().Y))
+                {
                     selectedButton = Buttons.Play;
+                    return;
+                }
                 if (exitButton.GetGlobalBounds().Contains(Mouse.GetPosition().X, Mouse.GetPosition().Y))
-                    selectedButton = Buttons.Exit;   
+                {
+                    selectedButton = Buttons.Exit;
+                    return;
+                }
+                selectedButton = Buttons.None;
             }
             if (menuType == MenuType.Levels)
             {
                 if (houseLevelButton.GetGlobalBounds().Contains(Mouse.GetPosition().X, Mouse.GetPosition().Y))
+                {
                     selectedButton = Buttons.HouseLevel;
+                    return;
+                }
                 if (backButton.GetGlobalBounds().Contains(Mouse.GetPosition().X, Mouse.GetPosition().Y))
+                {
                     selectedButton = Buttons.Back;
+                    return;
+                }
                 if (drugDenLevelButton.GetGlobalBounds().Contains(Mouse.GetPosition().X, Mouse.GetPosition().Y))
+                {
                     selectedButton = Buttons.DrugDenLevel;
+                    return;
+                }
                 if (hallwayLevelButton.GetGlobalBounds().Contains(Mouse.GetPosition().X, Mouse.GetPosition().Y))
+                {
                     selectedButton = Buttons.HallwayLevel;
+                    return;
+                }
+                selectedButton = Buttons.None;
             }
         }
         private void UpdateButtonsColor()
